@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "https://www.fast-freight-ai.com/*"
+  to = "https://fast-freight-ai.com/:splat"
+  status = 301
+  force = true
