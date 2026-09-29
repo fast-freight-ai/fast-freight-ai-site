@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>Fast Freight AI — The Found Freight Blog</title>
+<link>https://fast-freight-ai.com/blog/</link>
+<atom:link href="https://fast-freight-ai.com/feed.xml" rel="self" type="application/rss+xml"/>
+<description>Insider playbooks for freight brokers who'd rather win back shippers than chase strangers.</description>
+<language>en-us</language>
+<!-- ITEMS: newest first. The content engine inserts new <item> blocks right below this line. -->
+<item>
+<title>How to Find Shippers as a Freight Broker: Start With the Ones Who Already Asked</title>
+<link>https://fast-freight-ai.com/blog/how-to-find-shippers-freight-broker/</link>
+<guid>https://fast-freight-ai.com/blog/how-to-find-shippers-freight-broker/</guid>
+<pubDate>Mon, 28 Sep 2026 14:00:00 GMT</pubDate>
+<description>Before you cold call another shipper, work the ones who already asked for a quote. The insider playbook, word-for-word scripts and a 30-day plan.</description>
+</item>
+</channel>
+</rss>
