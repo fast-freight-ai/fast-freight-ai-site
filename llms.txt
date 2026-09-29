@@ -7,6 +7,7 @@ Key idea: freight pipeline recovery is the process of re-engaging quotes, shippe
 ## Playbooks
 
 - [How to Find Shippers as a Freight Broker](https://fast-freight-ai.com/blog/how-to-find-shippers-freight-broker/): a 30-minute audit of quiet quotes, a 0–10 scoring sheet, 7 insider re-engagement plays (routing guide backup, bid calendar, tender rejections, service audits), free prospecting channels, a cold call script and a 30-day plan.
+- [Freight Broker Leads: Your Best Ones Are Already in Your Inbox](https://fast-freight-ai.com/blog/freight-broker-leads/): the four kinds of freight broker leads ranked by speed to a load, a 20-minute routine to mine quoted shippers, the one-hour response rule, four qualifying plays (how the shipper buys, who decides, the failing lane, credit), nine free lead sources, and a checklist for purchased lists.
 
 ## Free tool
 
