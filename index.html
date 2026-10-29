@@ -1,90 +1,599 @@
 <!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fast Freight AI | Win back the shippers who already asked</title>
-<meta name="description" content="Stop hunting for new shippers. Fast Freight AI follows up with the quotes your team didn't have time to, in your voice. Free for 6 weeks.">
-<link rel="canonical" href="https://fast-freight-ai.com/">
-<meta name="theme-color" content="#0E1622">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Fast Freight AI | Win back the shippers who already asked"><meta property="og:description" content="Stop hunting for new shippers. Fast Freight AI follows up with the quotes your team didn't have time to, in your voice. Free for 6 weeks.">
-<meta property="og:url" content="https://fast-freight-ai.com/"><meta property="og:type" content="website">
-<meta property="og:image" content="https://fast-freight-ai.com/img/adriana-headshot.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css">
-<link rel="stylesheet" href="/assets/cta.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "Fast Freight AI", "legalName": "ThriveOn Solutions", "url": "https://fast-freight-ai.com", "email": "info@fast-freight-ai.com"}</script>
-</head><body class="is-home">
-<div class="progress" aria-hidden="true"></div>
-<header class="nav"><div class="nav-in">
-<a class="brand" href="/" aria-label="Fast Freight AI home"><span class="word">Fast Freight <b>AI</b></span></a>
-<nav><a href="/blog/">Blog</a><a class="btn btn-sm" href="https://recovery-challenge-prop.netlify.app/?utm_source=site&utm_medium=organic&utm_campaign=nav">Free 90-sec check</a></nav>
-</div></header>
-<section class="hero">
-<div class="hero-bg" style="--img:url('/.netlify/images?url=/img/hero.png&w=1920&fm=webp&q=70')"></div>
-<svg class="trails" viewBox="0 0 1440 420" preserveAspectRatio="none" aria-hidden="true">
-<path class="t t1" d="M-40 360 C 380 300, 820 330, 1480 250"/><path class="t t2" d="M-40 390 C 420 340, 900 360, 1480 300"/>
-<path class="t t3" d="M-40 405 C 460 370, 980 395, 1480 350"/><path class="t t4" d="M-40 330 C 360 280, 760 300, 1480 210"/>
-</svg>
-<div class="hero-in wrap-wide">
-<p class="eyebrow"><span class="dot"></span>For freight brokers</p>
-<h1 class="split">Stop hunting for new shippers. <span class="hl">Your next ten already asked you for a quote.</span></h1>
-<p class="lead reveal">We follow up with the shippers your team didn't have time to, in your voice. Free for 6 weeks. After that, you pay only when one gets on your calendar.</p>
-<div class="ctas reveal"><div class="cta-stack"><a class="btn btn-lg" href="https://recovery-challenge-prop.netlify.app/?utm_source=site&utm_medium=organic&utm_campaign=home-hero">Show me my quiet shippers</a><span class="micro">Free · 90 seconds · no call needed</span></div></div>
-<p class="reveal alt-wrap"><a class="alt-link" href="https://calendly.com/fast-freight-ai/15-min-freight-recovery-call-fast-freight-ai">Rather talk? Book 15 minutes with Adriana <i>→</i></a></p>
-<ul class="trust reveal"><li>No TMS integration</li><li>You approve every message</li><li>Pay per booked call</li></ul>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fast Freight AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="We bring back the trucking quotes that said 'let me think about it' and put the ready buyers on your calendar. Free test on 50 old quotes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: night-highway dark world. One glowing phone carries the story; editorial type does the rest. Single committed dark look. */
+:root{
+  --night:#0B121D;      /* page ground */
+  --asphalt:#141D2B;    /* raised surfaces */
+  --line:#24304299;     /* hairlines */
+  --chalk:#F3F1EC;      /* primary text */
+  --fog:#9AA3AE;        /* secondary text */
+  --signal:#F26B1D;     /* brand orange: actions + glow */
+  --signal-soft:#F26B1D22;
+  --go:#3DD68C;         /* "booked" state */
+  --display:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--night);color:var(--chalk);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--night)}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.02em}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 16px/1 var(--body);text-decoration:none;padding:17px 24px;border-radius:12px;transition:transform .2s ease,box-shadow .2s ease,background .2s}
+.btn-go{background:var(--signal);color:#fff;box-shadow:0 14px 40px -12px #F26B1Dcc}
+.btn-go:hover{transform:translateY(-2px);box-shadow:0 20px 50px -12px #F26B1Dee}
+.btn-ghost{border:1px solid #F3F1EC33;color:var(--chalk)}
+.btn-ghost:hover{border-color:var(--chalk)}
+.btn:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:#0B121Dcc;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.mark{font:800 19px/1 var(--display);letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.mark b{color:var(--signal)}
+.mark svg{width:26px;height:26px}
+.nav-r{display:flex;align-items:center;gap:12px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{background:none;border:0;color:var(--fog);font:500 12px/1 var(--mono);padding:7px 10px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--chalk);color:var(--night)}
+.nav .btn{padding:11px 16px;font-size:14px}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+#road{position:absolute;inset:0;width:100%;height:100%;z-index:-1;opacity:.9}
+.hero::after{content:"";position:absolute;inset:auto 0 0;height:160px;background:linear-gradient(transparent,var(--night));z-index:-1}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-block:72px 96px}
+.hero h1{font-size:clamp(42px,6.4vw,84px);line-height:.98;font-weight:800;margin-top:18px}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero .lede{margin-top:24px;font-size:19px;color:#C9CDD3;max-width:30em}
+.hero .lede b{color:var(--chalk);font-weight:600}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.fine{margin-top:16px;font:500 12px/1.5 var(--mono);color:var(--fog);letter-spacing:.04em}
+
+/* PHONE */
+.stage{perspective:1400px;display:flex;justify-content:center;position:relative}
+.halo{position:absolute;width:520px;height:520px;max-width:120%;border-radius:50%;background:radial-gradient(circle,#F26B1D55,#F26B1D11 45%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{50%{transform:translate(-50%,-50%) scale(1.08);opacity:.8}}
+.phone{--rx:8deg;--ry:-16deg;width:300px;max-width:100%;aspect-ratio:9/18.5;border-radius:44px;background:#05080D;padding:12px;border:1px solid #2A3547;box-shadow:0 60px 120px -30px #000,0 0 0 6px #111a27,inset 0 0 0 1px #3a4659;transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .25s ease-out;position:relative}
+.screen{height:100%;border-radius:33px;background:#F7F7F5;overflow:hidden;display:flex;flex-direction:column;color:#16202E}
+.sbar{display:flex;justify-content:space-between;font:600 12px/1 var(--body);padding:14px 22px 8px}
+.chead{display:flex;align-items:center;gap:10px;padding:8px 14px 12px;border-bottom:1px solid #E5E6E8}
+.av{width:34px;height:34px;border-radius:50%;background:#E4E2DC;display:grid;place-items:center;font:700 12px var(--display)}
+.cname{font:700 13px/1.2 var(--body)}.cmeta{font:500 10.5px/1.3 var(--mono);color:#7A828C}
+.msgs{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.b{max-width:84%;padding:9px 12px;border-radius:17px;font:400 13px/1.38 var(--body);opacity:0;transform:translateY(10px) scale(.97);transition:all .45s cubic-bezier(.2,.8,.2,1)}
+.b.show{opacity:1;transform:none}
+.out{align-self:flex-end;background:var(--signal);color:#fff;border-bottom-right-radius:5px}
+.in{align-self:flex-start;background:#E9EAEC;border-bottom-left-radius:5px}
+.typing{align-self:flex-start;background:#E9EAEC;border-radius:17px;padding:11px 14px;display:none;gap:4px}
+.typing.on{display:flex}
+.typing i{width:6px;height:6px;border-radius:50%;background:#8B929B;animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{transform:translateY(-3px);opacity:.5}}
+.booked{margin:0 12px 14px;border-radius:16px;background:#0B121D;color:#fff;padding:12px 14px;display:flex;gap:12px;align-items:center;opacity:0;transform:translateY(14px);transition:all .6s cubic-bezier(.2,.8,.2,1)}
+.booked.show{opacity:1;transform:none}
+.booked .ck{width:30px;height:30px;border-radius:50%;background:var(--go);display:grid;place-items:center;flex:none}
+.booked small{display:block;font:500 10px/1.2 var(--mono);letter-spacing:.1em;color:var(--go);text-transform:uppercase}
+.booked strong{font:700 14px/1.3 var(--display)}
+.booked .bk-note{display:block;font:500 11px/1.35 var(--body);color:#C9CDD3;margin-top:3px}
+.chip{position:absolute;font:500 11px/1 var(--mono);background:var(--asphalt);border:1px solid #2A3547;color:var(--chalk);padding:9px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 20px 40px -18px #000;animation:float 7s ease-in-out infinite}
+.chip span{color:var(--signal)}
+.chip.c1{top:14%;left:-6%}.chip.c2{bottom:20%;right:-8%;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-10px)}}
+
+/* PROMISE STRIP */
+.strip{border-block:1px solid var(--line);background:var(--asphalt)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-block:22px;gap:16px}
+.strip div{display:flex;gap:10px;align-items:flex-start;font:500 14px/1.4 var(--body);color:#D5D8DD}
+.strip svg{flex:none;margin-top:2px}
+
+/* LETTER */
+.letter .wrap{padding-block:120px;max-width:980px}
+.letter .eyebrow{margin-bottom:28px}
+.scroll-words{font:700 clamp(28px,4.2vw,52px)/1.18 var(--display);letter-spacing:-.025em}
+.scroll-words .w{opacity:.28;transition:opacity .25s linear}
+.scroll-words .w.lit{opacity:1}
+.scroll-words .hot{color:var(--signal)}
+.letter .sig{margin-top:40px;color:var(--fog);font-size:17px;max-width:36em}
+
+/* HOW */
+section h2{font-size:clamp(34px,4.6vw,58px);line-height:1.04}
+.how .wrap{padding-block:40px 120px}
+.how-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:48px}
+.how-head p{color:var(--fog);max-width:26em}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+.step{background:var(--asphalt);border:1px solid var(--line);border-radius:22px;padding:30px 28px 32px;position:relative;overflow:hidden;min-width:0}
+.step .n{font:800 88px/.8 var(--display);color:transparent;-webkit-text-stroke:1.5px #F26B1D88;letter-spacing:-.04em}
+.step h3{font-size:24px;margin:22px 0 10px}
+.step p{color:#B7BDC5;font-size:16px}
+.who{display:inline-block;margin-top:20px;font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fog)}
+.who.you{border-color:var(--signal);color:var(--signal)}
+
+/* MATH */
+.math{background:radial-gradient(ellipse at 80% 0%,#F26B1D1f,transparent 55%),var(--asphalt);border-block:1px solid var(--line)}
+.math .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding-block:110px;align-items:center}
+.math h2 em{font-style:normal;color:var(--signal)}
+.math .sub{color:var(--fog);margin-top:18px;max-width:28em}
+.calc{background:var(--night);border:1px solid var(--line);border-radius:24px;padding:30px;min-width:0}
+.field{margin-bottom:26px}
+.field label{display:flex;justify-content:space-between;font:500 14px/1 var(--body);color:#C9CDD3;margin-bottom:14px}
+.field output{font:500 14px var(--mono);color:var(--chalk)}
+input[type=range]{width:100%;accent-color:var(--signal);height:24px}
+.result{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.result small{display:block;font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fog)}
+.big{font:800 clamp(44px,6vw,64px)/1 var(--display);color:var(--signal);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.policies{font:700 20px var(--display);font-variant-numeric:tabular-nums}
+.calc .note{margin-top:16px;font:400 12px/1.5 var(--body);color:var(--fog)}
+
+/* NIGHT (speed to lead) */
+.night .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;padding-block:120px}
+.clock{font:800 clamp(80px,12vw,150px)/.85 var(--display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.clock span{color:var(--signal)}
+.night .eyebrow{margin-bottom:22px}
+.night p.big-p{font-size:20px;color:#C9CDD3;margin-top:22px;max-width:28em}
+.night p.big-p b{color:var(--chalk)}
+.timeline{display:grid;gap:12px;margin-top:30px}
+.tl{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:start;padding:14px 16px;border-radius:14px;background:var(--asphalt);border:1px solid var(--line)}
+.tl time{font:500 13px/1.5 var(--mono);color:var(--signal)}
+.tl div{font-size:15px;color:#D5D8DD}
+.tag{display:inline-block;margin-top:24px;font:500 12px/1.4 var(--mono);color:var(--fog);border:1px dashed #F3F1EC33;border-radius:10px;padding:10px 12px}
+
+/* OFFER */
+.offer .wrap{padding-block:40px 120px}
+.offer h2{max-width:14em}
+.offer-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:48px}
+.card{border:1px solid var(--line);border-radius:22px;padding:30px 28px;background:var(--asphalt);display:flex;flex-direction:column;gap:14px;min-width:0}
+.card.free{background:linear-gradient(160deg,#F26B1D,#C9500F);border:0;color:#fff;box-shadow:0 30px 80px -30px #F26B1Daa}
+.card .label{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.card .price{font:800 48px/1 var(--display);letter-spacing:-.03em}
+.card .price small{font:600 15px var(--body);letter-spacing:0;opacity:.8}
+.card ul{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:10px;font-size:15px}
+.card li{display:flex;gap:10px}
+.card li::before{content:"";flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%;background:currentColor;opacity:.25;box-shadow:inset 0 0 0 4px var(--asphalt)}
+.card.free li::before{opacity:1;background:#fff;box-shadow:inset 0 0 0 4px #E05D17}
+.card .muted{color:var(--fog);font-size:14px}
+.card.free .btn{background:#fff;color:#0B121D;margin-top:auto;justify-content:center}
+.card .btn-ghost{margin-top:auto;justify-content:center}
+.enterprise{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px dashed #F3F1EC33;border-radius:18px;padding:20px 24px;color:#C9CDD3}
+.enterprise b{color:var(--chalk);font-family:var(--display)}
+
+/* FAQ */
+.faq .wrap{padding-block:40px 120px;display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+details{border-bottom:1px solid var(--line);padding-block:22px}
+summary{cursor:pointer;list-style:none;font:700 19px/1.35 var(--display);display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--signal);font-weight:500;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:12px;color:#B7BDC5;max-width:40em}
+
+/* NOTE */
+.note-sec{background:var(--chalk);color:#16202E}
+.note-sec .wrap{max-width:820px;padding-block:110px}
+.note-sec .eyebrow{color:#C9500F}
+.note-sec p{font-size:20px;line-height:1.65;margin-top:22px}
+.note-sec .ps{font-size:18px;border-top:1px solid #16202E22;padding-top:22px;margin-top:30px}
+.note-sec .name{font:800 26px var(--display);margin-top:34px}
+.note-sec .role{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#5A636E;margin-top:6px}
+
+/* FINAL */
+.final{position:relative;overflow:hidden;text-align:center}
+.final .wrap{padding-block:130px}
+.final::before{content:"";position:absolute;left:50%;top:60%;width:900px;height:900px;max-width:200%;transform:translate(-50%,-50%);background:radial-gradient(circle,#F26B1D40,transparent 60%);z-index:-1}
+.final{isolation:isolate}
+.final h2{font-size:clamp(40px,6.4vw,82px);line-height:1;max-width:12em;margin:0 auto}
+.final p{color:#C9CDD3;margin:22px auto 0;max-width:30em;font-size:19px}
+.final .cta-row{justify-content:center}
+.spots{display:inline-flex;gap:8px;margin-top:28px;align-items:center;font:500 13px var(--mono);color:var(--fog)}
+.spots i{width:10px;height:10px;border-radius:50%;background:var(--signal)}
+.spots i.o{background:none;border:1.5px solid var(--signal)}
+footer{border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:30px;font:500 13px var(--mono);color:var(--fog)}
+.sel{user-select:all;color:var(--chalk)}
+
+/* reveal */
+.rv{transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
+.js .rv.pre{transform:translateY(26px);opacity:.4}
+
+@media (max-width:900px){
+  .hero .wrap,.math .wrap,.night .wrap,.faq .wrap{grid-template-columns:1fr;gap:44px}
+  .hero .wrap{padding-block:44px 72px}
+  .steps,.offer-grid{grid-template-columns:1fr}
+  .strip .wrap{grid-template-columns:1fr 1fr}
+  .chip.c1{left:0}.chip.c2{right:0}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .strip .wrap{grid-template-columns:1fr}
+  .nav .btn{display:none}
+  .phone{width:270px}
+  .chip.c1{top:1%}
+  .letter .wrap,.math .wrap,.night .wrap,.note-sec .wrap,.final .wrap{padding-block:80px}
+  .tl{grid-template-columns:64px 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .b,.booked{opacity:1;transform:none}
+  .scroll-words .w{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Fast Freight AI home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 6.5v9C4 23 9.2 28.3 16 30c6.8-1.7 12-7 12-14.5v-9L16 2Z" fill="#F26B1D"/><path d="M13 25 15 9h2l2 16" fill="none" stroke="#0B121D" stroke-width="2"/><path d="M16 12v2m0 3v2m0 3v2" stroke="#0B121D" stroke-width="1.6"/></svg>
+      <span>Fast Freight <b>AI</b></span>
+    </a>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" id="lang-en" aria-pressed="true">EN</button>
+        <button type="button" id="lang-es" aria-pressed="false">ES</button>
+      </div>
+      <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Prueba gratis">Free test</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="road" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-es="Para agencias de seguros de camiones">For trucking insurance agencies</div>
+      <h1 data-es="Tus próximas pólizas <em>ya te pidieron cotización.</em>">Your next policies <em>already asked you for a quote.</em></h1>
+      <p class="lede" data-es="Cada camionero que dijo <b>“lo voy a pensar”</b> es un cliente que ya te costó conseguir. Nosotros le volvemos a escribir y te ponemos a los que están <b>listos para comprar</b> directo en tu calendario.">Every trucker who said <b>“let me think about it”</b> is a client you already paid to get. We reach back out to them and put the ones <b>ready to buy</b> straight on your calendar.</p>
+      <div class="cta-row">
+        <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero mi prueba gratis →">Claim my free test →</a>
+        <a class="btn btn-ghost" href="#how" data-es="Cómo funciona">See how it works</a>
+      </div>
+      <p class="fine" data-es="50 cotizaciones viejas · $0 · lista en una semana aprox. · tú apruebas cada mensaje">50 old quotes · $0 · live in about a week · you approve every message</p>
+    </div>
+    <div class="stage" aria-label="Example conversation" role="img">
+      <div class="halo"></div>
+      <div class="phone" id="phone">
+        <div class="screen">
+          <div class="sbar"><span>9:41</span><span>●●● 5G</span></div>
+          <div class="chead"><div class="av">MR</div><div><div class="cname">Mike R. · Owner-operator</div><div class="cmeta" data-es="Cotizó en agosto · no cerró">Quoted in August · didn't close</div></div></div>
+          <div class="msgs" id="msgs">
+            <div class="b out" data-es="¡Hola Mike! Soy Sara de Ridgeline Insurance. En agosto nos pediste cotización para tu camión, ¿todavía buscas seguro?">Hi Mike! It's Sarah with Ridgeline Insurance. You asked us for a truck quote back in August, still need coverage?</div>
+            <div class="b in" data-es="¡Sí! De hecho ya son 2 camiones 😅 mi póliza vence el próximo mes">Hey yes! Actually it's 2 trucks now 😅 my policy renews next month</div>
+            <div class="b out" data-es="¡Felicidades por el camión nuevo! ¿Te llama nuestro agente mañana, 10am o 2pm?">Congrats on the new truck! Can our agent call you tomorrow, 10am or 2pm?</div>
+            <div class="b in" data-es="A las 10 👍">10 works 👍</div>
+            <div class="typing" id="typing"><i></i><i></i><i></i></div>
+          </div>
+          <div class="booked" id="booked">
+            <div class="ck"><svg width="14" height="14" viewBox="0 0 14 14"><path d="m2 7 3.2 3L12 3.5" fill="none" stroke="#0B121D" stroke-width="2.2"/></svg></div>
+            <div><small data-es="Agendado en tu calendario">Booked on your calendar</small><strong data-es="Mike R. · Jue 10:00 AM">Mike R. · Thu 10:00 AM</strong><span class="bk-note" data-es="2 camiones · vence el próximo mes · listo para comprar">2 trucks · renews next month · ready to buy</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="chip c1"><span>●</span> <b data-es="Respuesta en español o inglés">Replies in English or Spanish</b></div>
+      <div class="chip c2"><span>✓</span> <b data-es="Nota lista antes de tu llamada">Call note ready for you</b></div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap">
+    <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#F26B1D" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#F26B1D" stroke-width="1.6"/></svg><span data-es="Tú apruebas cada mensaje antes de que salga">You approve every message before it goes out</span></div>
+    <div><svg width="18" height="18" viewBox="0 0 18 18"><rect x="3" y="8" width="12" height="8" rx="2" fill="none" stroke="#F26B1D" stroke-width="1.6"/><path d="M6 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="#F26B1D" stroke-width="1.6"/></svg><span data-es="Tu lista es privada y se borra al terminar">Your list stays private and is deleted after</span></div>
+    <div><svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 4h12M3 9h8M3 14h10" stroke="#F26B1D" stroke-width="1.6" fill="none"/></svg><span data-es="Español e inglés, de forma natural">English and Spanish, naturally</span></div>
+    <div><svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2v14M5 6c0-2 8-2 8 0s-8 2-8 4 8 2 8 0" stroke="#F26B1D" stroke-width="1.6" fill="none"/></svg><span data-es="Cada póliza y comisión es 100% tuya">Every policy and commission is 100% yours</span></div>
+  </div>
 </div>
-<a class="scroll-cue" href="#quiet" aria-label="Scroll"><span></span></a>
+
+<section class="letter">
+  <div class="wrap">
+    <div class="eyebrow" data-es="Una nota rápida para el dueño de la agencia">A quick note to the agency owner</div>
+    <p class="scroll-words" id="words" data-es="Ahora mismo, en tus archivos, hay una lista de camioneros que te pidieron cotización, dijeron <span class=&quot;hot&quot;>“lo voy a pensar”</span>… y nunca volvieron a saber de ti. No porque no te importaran. Solo estabas ocupado. Ellos todavía necesitan seguro. Alguien se los va a vender. <span class=&quot;hot&quot;>Debería ser tu agencia.</span>">Right now, somewhere in your files, there's a list of truckers who asked you for a quote, said <span class="hot">“let me think about it”</span>… and never heard from you again. Not because you didn't care. You just got busy. They still need insurance. Someone is going to sell it to them. <span class="hot">It should be you.</span></p>
+    <p class="sig" data-es="Eso es todo lo que hacemos: volvemos por esos clientes, de tu parte, y solo te pasamos a los que están listos.">That's all we do. We go back for those clients, in your agency's name, and only hand you the ones who are ready.</p>
+  </div>
 </section>
 
-<section id="quiet" class="quiet wrap-wide">
-<div class="quiet-copy reveal">
-<p class="eyebrow dark"><span class="dot"></span>The quiet pipeline</p>
-<h2>Your inbox is a pipeline. <span class="hl">Most of it went quiet.</span></h2>
-<p>Quotes that never got a second follow-up. Shippers who said “circle back next quarter.” Accounts that moved one load and disappeared. Nobody told you no. They just stopped hearing from you.</p>
-<p>We go back to every one of them, like a person would, and put the ones who are still shipping on your calendar.</p>
-<a class="link-arrow" href="/blog/how-to-find-shippers-freight-broker/">See the playbook we use <i>→</i></a>
-</div>
-<div class="inbox reveal" aria-label="Illustration: quiet quotes coming back to life">
-<div class="inbox-head"><span>Quiet quotes</span><span class="inbox-note">Illustration</span></div>
-<div class="q"><div class="q-top"><span class="q-lane">Dallas, TX → Atlanta, GA</span><span class="q-state"><em class="st-q">No reply</em><em class="st-l">Replied</em></span></div>
-<p class="q-meta">Dry van · quoted 41 days ago</p><p class="q-reply">“Still moving. Send rates.”</p></div><div class="q"><div class="q-top"><span class="q-lane">Fresno, CA → Phoenix, AZ</span><span class="q-state"><em class="st-q">No reply</em><em class="st-l">Replied</em></span></div>
-<p class="q-meta">Reefer · quoted 67 days ago</p><p class="q-reply">“Primary just rejected. Can you cover Thursday?”</p></div><div class="q"><div class="q-top"><span class="q-lane">Laredo, TX → Chicago, IL</span><span class="q-state"><em class="st-q">No reply</em><em class="st-l">Replied</em></span></div>
-<p class="q-meta">Dry van · quoted 23 days ago</p><p class="q-reply">“Bid opens in November. Add us to the list.”</p></div><div class="q"><div class="q-top"><span class="q-lane">Ontario, CA → Denver, CO</span><span class="q-state"><em class="st-q">No reply</em><em class="st-l">Replied</em></span></div>
-<p class="q-meta">Flatbed · quoted 90 days ago</p><p class="q-reply">“We switched. It hasn't gone well.”</p></div>
-</div>
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="how-head">
+      <h2 data-es="Tres pasos.<br>Solo uno es tuyo.">Three steps.<br>Only one is yours.</h2>
+      <p data-es="Sin cambiar tus sistemas. Empiezas con una hoja de cálculo y nosotros hacemos el resto.">No new software to learn. You start with a simple spreadsheet and we do the rest.</p>
+    </div>
+    <div class="steps">
+      <article class="step rv">
+        <div class="n" aria-hidden="true">01</div>
+        <h3 data-es="Nos pasas la lista">Send the list</h3>
+        <p data-es="Tu hoja de cálculo con 50 personas que cotizaste y no compraron: nombre, teléfono y email.">Your spreadsheet of 50 people you quoted who never bought: name, phone and email.</p>
+        <span class="who you" data-es="Tu parte · unos minutos">Your part · a few minutes</span>
+      </article>
+      <article class="step rv">
+        <div class="n" aria-hidden="true">02</div>
+        <h3 data-es="Les volvemos a escribir">We reach back out</h3>
+        <p data-es="Textos y emails a nombre de tu agencia, en su idioma. Contestamos cada respuesta y vemos quién sí califica y está listo.">Texts and emails in your agency's name, in their language. We handle every reply and find out who qualifies and is ready.</p>
+        <span class="who" data-es="Nuestra parte">Our part</span>
+      </article>
+      <article class="step rv">
+        <div class="n" aria-hidden="true">03</div>
+        <h3 data-es="Compradores en tu calendario">Buyers on your calendar</h3>
+        <p data-es="Los listos llegan a tu calendario con una nota corta: quién es, qué necesita y cuándo se le vence la póliza. Tú solo cierras.">Ready buyers land on your calendar with a short note: who they are, what they need, when their policy renews. You just close.</p>
+        <span class="who" data-es="Nuestra parte">Our part</span>
+      </article>
+    </div>
+  </div>
 </section>
 
-<section class="how"><div class="wrap-wide">
-<p class="eyebrow dark center"><span class="dot"></span>How it works</p>
-<h2 class="center reveal">Three steps. <span class="hl">Your team doesn't change a thing.</span></h2>
-<div class="steps">
-<div class="step reveal"><span class="num">01</span><h3>We find what went quiet</h3><p>Old quotes, stalled conversations, one-and-done shippers. We sort who's still worth talking to.</p></div>
-<div class="step reveal"><span class="num">02</span><h3>We reach back out, in your voice</h3><p>Short, specific messages about their lanes. You approve every one before it goes out.</p></div>
-<div class="step reveal"><span class="num">03</span><h3>You get booked calls</h3><p>The shippers who are still moving freight land on your calendar, ready to talk.</p></div>
-<svg class="steps-line" viewBox="0 0 1000 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 4 H1000"/></svg>
-</div></div></section>
-
-<section class="offer wrap-wide"><div class="offer-card reveal">
-<div><p class="eyebrow"><span class="dot"></span>The offer</p>
-<h2>The first 6 weeks are on us.</h2>
-<p>We run a 6-week test on the opportunities that went quiet. If it doesn't book shipper calls, you don't pay for it. After that, you pay per booked call. No lock-in.</p></div>
-<div class="offer-cta"><a class="btn btn-lg" href="https://recovery-challenge-prop.netlify.app/?utm_source=site&utm_medium=organic&utm_campaign=home-offer">Show me my quiet shippers</a><span class="muted-light">Free · 90 seconds · no call needed</span></div>
-</div></section>
-
-<section class="latest wrap-wide">
-<div class="latest-head reveal"><p class="eyebrow dark"><span class="dot"></span>From the blog</p><h2>Free insider playbooks</h2></div>
-<a class="post-card reveal" href="/blog/freight-broker-leads/"><div class="post-card-img" style="--img:url('/.netlify/images?url=/img/hero.png&w=900&fm=webp&q=65')"><span class="pill">Playbook · 13 min</span></div>
-<div class="post-card-body"><p class="tag">Freight broker leads</p><h2>Freight Broker Leads: Your Best Ones Are Already in Your Inbox</h2><p>The best freight broker leads are the ones you already quoted. Free lead sources ranked, scripts to qualify fast, and why purchased lists underperform.</p><span class="more">Read the playbook <i>→</i></span></div></a>
+<section class="math">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-es="Haz la cuenta">Do the math</div>
+      <h2 style="margin-top:18px" data-es="Si solo regresan <em>3 de 50</em>, ya ganaste.">If just <em>3 of 50</em> come back, you already won.</h2>
+      <p class="sub" data-es="Mueve los números con los de tu agencia. Es dinero que ya pagaste por conseguir, sentado en una lista.">Move the numbers to match your agency. This is money you already paid to get, sitting in a list.</p>
+    </div>
+    <div class="calc">
+      <div class="field"><label for="q"><span data-es="Cotizaciones viejas que no cerraron">Old quotes that didn't close</span><output id="qo">200</output></label><input type="range" id="q" min="50" max="2000" step="50" value="200"></div>
+      <div class="field"><label for="r"><span data-es="Cuántas regresan (de cada 100)">How many come back (per 100)</span><output id="ro">6</output></label><input type="range" id="r" min="1" max="15" step="1" value="6"></div>
+      <div class="field"><label for="c"><span data-es="Tu comisión por póliza al año">Your commission per policy, per year</span><output id="co">$1,500</output></label><input type="range" id="c" min="500" max="5000" step="100" value="1500"></div>
+      <div class="result">
+        <div><small data-es="Pólizas recuperadas">Policies won back</small><div class="policies" id="pol">12</div></div>
+        <div style="text-align:right"><small data-es="Comisión estimada al año">Estimated commission / year</small><div class="big" id="tot">$18,000</div></div>
+      </div>
+      <p class="note" data-es="Ejemplo para calcular, no una promesa. Los resultados dependen de tus cotizaciones.">An example to calculate with, not a promise. Results depend on your quotes.</p>
+    </div>
+  </div>
 </section>
 
-<section class="cta-band"><div class="wrap-wide cta-in reveal">
-<h2>Let's see what's sitting <span>in your system.</span></h2>
-<div class="cta-stack"><a class="btn btn-lg" href="https://recovery-challenge-prop.netlify.app/?utm_source=site&utm_medium=organic&utm_campaign=home-bottom">Show me my quiet shippers</a><span class="micro">Free · 90 seconds · no call needed</span><a class="alt-link" href="https://calendly.com/fast-freight-ai/15-min-freight-recovery-call-fast-freight-ai">Rather talk? Book 15 minutes with Adriana <i>→</i></a></div>
-</div></section>
-<footer class="foot"><div class="wrap-wide foot-in">
-<div><a class="brand" href="/" aria-label="Fast Freight AI home"><span class="word">Fast Freight <b>AI</b></span></a><p class="muted">Win back the shippers who already asked.<br>A DBA of ThriveOn Solutions, California.</p></div>
-<div class="foot-links"><a href="/blog/">Blog</a><a href="https://recovery-challenge-prop.netlify.app/?utm_source=site&utm_medium=organic&utm_campaign=footer">Opportunity Leak Check</a><a href="https://calendly.com/fast-freight-ai/15-min-freight-recovery-call-fast-freight-ai">Book 15 minutes with Adriana</a><a href="mailto:info@fast-freight-ai.com">info@fast-freight-ai.com</a></div>
-</div></footer>
-<script src="/assets/site.js" defer></script>
-</body></html>
+<section class="night">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-es="Y para las cotizaciones nuevas">And for new quote requests</div>
+      <div class="clock" aria-label="9:12 PM">9<span>:</span>12<small style="font-size:.3em;letter-spacing:0"> PM</small></div>
+      <p class="big-p" data-es="Estás cenando con tu familia. Un camionero termina su ruta y pide cotización. <b>No tienes que tomar el teléfono.</b>">You're at dinner with your family. A trucker finishes his route and asks for a quote. <b>You don't have to pick up your phone.</b></p>
+      <span class="tag" data-es="Incluido en los planes de pago · no en la prueba gratis">Included in the paid plans · not in the free test</span>
+    </div>
+    <div class="timeline">
+      <div class="tl rv"><time>9:12 PM</time><div data-es="Llega la solicitud por tu página, email o redes.">The request comes in from your website, email or social media.</div></div>
+      <div class="tl rv"><time>9:12 PM</time><div data-es="Le contestamos en menos de un minuto, en español o inglés.">We answer in under a minute, in English or Spanish.</div></div>
+      <div class="tl rv"><time>9:15 PM</time><div data-es="Vemos si califica: número de DOT, camiones, carga y cuándo vence su póliza.">We check if they qualify: DOT number, trucks, cargo, renewal date.</div></div>
+      <div class="tl rv"><time>9:17 PM</time><div data-es="Queda agendado para el día siguiente. Tú despiertas con la llamada y la nota lista.">Booked for the next day. You wake up to the call and the note, ready.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="offer">
+  <div class="wrap">
+    <div class="eyebrow" data-es="Cómo trabajamos">How we work together</div>
+    <h2 style="margin-top:18px" data-es="Primero te demostramos que funciona. Luego decides.">First we prove it works. Then you decide.</h2>
+    <div class="offer-grid">
+      <article class="card free">
+        <div class="label" data-es="Empieza aquí">Start here</div>
+        <h3 style="font-size:26px" data-es="Prueba gratis">Free test</h3>
+        <div class="price">$0 <small data-es="· 50 cotizaciones viejas">· 50 old quotes</small></div>
+        <ul>
+          <li data-es="Mensajes con la voz de tu agencia, aprobados por ti">Messages in your agency's voice, approved by you</li>
+          <li data-es="Atendemos cada respuesta">Every reply handled for you</li>
+          <li data-es="Compradores listos en tu calendario, con nota">Ready buyers on your calendar, with a note</li>
+          <li data-es="Lista en una semana aprox.">Live in about a week</li>
+          <li data-es="Si nadie agenda, no perdiste nada">If nobody books, you lost nothing</li>
+        </ul>
+        <a class="btn js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero mi prueba gratis →">Claim my free test →</a>
+      </article>
+      <article class="card">
+        <div class="label" style="color:var(--fog)" data-es="Después · pagas por resultado">After · pay for results</div>
+        <h3 style="font-size:24px" data-es="Por cliente recuperado">Per client won back</h3>
+        <div class="price">$80 <small data-es="/ cliente">/ client</small></div>
+        <p class="muted" data-es="Solo pagas cuando regresa un cliente. Ideal para empezar.">You only pay when a client comes back. Simple way to keep going.</p>
+        <ul class="muted">
+          <li data-es="Reactivación de cotizaciones viejas">Old-quote reactivation</li>
+          <li data-es="Respuesta inmediata a cotizaciones nuevas">Instant reply to new quote requests</li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="label" style="color:var(--fog)" data-es="Después · mucho volumen">After · high volume</div>
+        <h3 style="font-size:24px" data-es="Mensual">Monthly</h3>
+        <div class="price">$1,500 <small data-es="/ mes">/ month</small></div>
+        <p class="muted" data-es="Para agencias con muchas cotizaciones cada mes. Un precio fijo.">For agencies with a lot of quotes every month. One flat price.</p>
+        <ul class="muted">
+          <li data-es="Reactivación de cotizaciones viejas">Old-quote reactivation</li>
+          <li data-es="Respuesta inmediata a cotizaciones nuevas">Instant reply to new quote requests</li>
+        </ul>
+      </article>
+    </div>
+    <div class="enterprise"><span data-es="<b>¿Más de 100 llamadas al mes?</b> Armamos un plan para tu volumen.">✦ <b>100+ calls a month?</b> We'll build a plan around your volume.</span><span class="sel">info@fast-freight-ai.com</span></div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-es="Preguntas">Questions</div>
+      <h2 style="margin-top:18px" data-es="Lo que todo dueño pregunta primero.">What every owner asks first.</h2>
+    </div>
+    <div>
+      <details open><summary data-es="¿Le van a escribir a mis clientes sin que yo lo vea?">Will you message my clients without me seeing it?</summary><p data-es="No. Antes de empezar, tú revisas y apruebas los mensajes. Suenan como tu agencia, no como un robot.">No. Before anything goes out, you review and approve the messages. They sound like your agency, not a robot.</p></details>
+      <details><summary data-es="¿Qué pasa con mi lista?">What happens to my list?</summary><p data-es="Solo la usamos para tu campaña. Al terminar, la borramos de todos lados. Tus clientes siguen siendo tuyos.">We only use it for your campaign. When it's done, we delete it everywhere. Your clients stay yours.</p></details>
+      <details><summary data-es="¿Tengo que cambiar mis sistemas?">Do I have to change my systems?</summary><p data-es="No. Para empezar solo necesitamos una hoja de cálculo con nombre, teléfono y email.">No. To start, we only need a spreadsheet with names, phones and emails.</p></details>
+      <details><summary data-es="¿A quién le escriben?">Who do you contact?</summary><p data-es="Solo a tus propios clientes: personas que ya te pidieron cotización y te dieron su información para que les dieras seguimiento.">Only your own leads: people who already asked you for a quote and shared their info so you could follow up.</p></details>
+      <details><summary data-es="¿Cuál es el truco de la prueba gratis?">What's the catch with the free test?</summary><p data-es="Ninguno. Somos nuevos en seguros de camiones y preferimos demostrarlo con resultados antes de cobrarte un centavo.">There isn't one. We're new in trucking insurance, so we'd rather prove it with results before you pay a cent.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="note-sec">
+  <div class="wrap">
+    <div class="eyebrow" data-es="De la fundadora">From the founder</div>
+    <p data-es="Pasé años en ventas con los mejores números y haciendo marketing para empresas de nueve cifras. Algo que aprendí: la mayoría de las ventas no se pierden por precio. Se pierden porque nadie volvió a llamar.">I spent years in sales with top numbers, and doing marketing for nine-figure companies. One thing I learned: most sales aren't lost on price. They're lost because nobody called back.</p>
+    <p data-es="Las agencias de seguros de camiones trabajan duro por cada cotización. Mi equipo y yo construimos Fast Freight AI para que ninguna se quede olvidada en una lista.">Trucking insurance agencies work hard for every quote. My team and I built Fast Freight AI so none of them get forgotten in a list.</p>
+    <p class="ps" data-es="<b>P.D.</b> Este mes solo tomamos 3 agencias para la prueba gratis, para darle a cada una atención completa.">“<b>P.S.</b> We only take 3 agencies for the free test this month, so each one gets our full attention.”</p>
+    <div class="name">Adriana</div>
+    <div class="role" data-es="Fundadora · Fast Freight AI">Founder · Fast Freight AI</div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 data-es="Tus clientes ya te pidieron cotización. Vamos por ellos.">Your clients already asked for a quote. Let's go get them.</h2>
+    <p data-es="Unos minutos hoy. Compradores listos en tu calendario muy pronto.">A few minutes today. Ready buyers on your calendar soon after.</p>
+    <div class="cta-row" style="margin-top:34px">
+      <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero mi prueba gratis →">Claim my free test →</a>
+    </div>
+    <div class="spots"><i></i><i class="o"></i><i class="o"></i> <span data-es="3 lugares para la prueba gratis este mes">3 free test spots this month</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Fast Freight AI · ThriveOn Solutions</span>
+    <span><span data-es="Preguntas:">Questions:</span> <span class="sel">info@fast-freight-ai.com</span></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FORMS = {en:'https://tally.so/r/Npekab', es:'https://tally.so/r/vGQk9d'};
+
+  /* ---------- language ---------- */
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-es]'));
+  nodes.forEach(function(n){ n.setAttribute('data-en', n.innerHTML); });
+  function setLang(l){
+    nodes.forEach(function(n){ n.innerHTML = n.getAttribute(l==='es'?'data-es':'data-en'); });
+    document.querySelectorAll('.js-form').forEach(function(a){ a.href = FORMS[l]; });
+    document.documentElement.lang = l;
+    document.getElementById('lang-en').setAttribute('aria-pressed', l==='en');
+    document.getElementById('lang-es').setAttribute('aria-pressed', l==='es');
+    try{ localStorage.setItem('ffai-lang', l); }catch(e){}
+    splitWords(); calc();
+  }
+  document.getElementById('lang-en').onclick = function(){ setLang('en'); };
+  document.getElementById('lang-es').onclick = function(){ setLang('es'); };
+
+  /* ---------- scroll-lit letter ---------- */
+  var words = [];
+  function splitWords(){
+    var el = document.getElementById('words');
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    var texts = []; while(walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(function(t){
+      var frag = document.createDocumentFragment();
+      t.textContent.split(/(\s+)/).forEach(function(p){
+        if(!p) return;
+        if(/^\s+$/.test(p)){ frag.appendChild(document.createTextNode(p)); return; }
+        var s = document.createElement('span'); s.className='w'; s.textContent=p; frag.appendChild(s);
+      });
+      t.parentNode.replaceChild(frag, t);
+    });
+    words = Array.prototype.slice.call(el.querySelectorAll('.w'));
+    lightWords();
+  }
+  function lightWords(){
+    if(!words.length) return;
+    var el = document.getElementById('words'), r = el.getBoundingClientRect(), vh = innerHeight;
+    var p = reduce ? 1 : Math.min(1, Math.max(0, (vh*0.85 - r.top) / (r.height + vh*0.35)));
+    var n = Math.round(p * words.length);
+    words.forEach(function(w,i){ w.classList.toggle('lit', i < n); });
+  }
+
+  /* ---------- phone tilt ---------- */
+  var phone = document.getElementById('phone'), mx=0, my=0;
+  function tilt(){
+    var y = Math.min(scrollY, 700)/700;
+    phone.style.setProperty('--ry', (-16 + y*22 + mx*8) + 'deg');
+    phone.style.setProperty('--rx', (8 - y*10 - my*6) + 'deg');
+  }
+  if(!reduce){
+    addEventListener('pointermove', function(e){ mx = e.clientX/innerWidth-.5; my = e.clientY/innerHeight-.5; tilt(); }, {passive:true});
+  }
+
+  /* ---------- conversation loop ---------- */
+  var bubbles = Array.prototype.slice.call(document.querySelectorAll('#msgs .b'));
+  var typing = document.getElementById('typing'), booked = document.getElementById('booked');
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+  async function play(){
+    if(reduce){ bubbles.forEach(function(b){b.classList.add('show');}); booked.classList.add('show'); return; }
+    while(true){
+      bubbles.forEach(function(b){ b.classList.remove('show'); }); booked.classList.remove('show');
+      await wait(600);
+      for(var i=0;i<bubbles.length;i++){
+        if(bubbles[i].classList.contains('in')){ typing.classList.add('on'); await wait(1100); typing.classList.remove('on'); }
+        bubbles[i].classList.add('show'); await wait(900);
+      }
+      await wait(400); booked.classList.add('show');
+      await wait(4200);
+    }
+  }
+  /* resting frame: show full conversation first, then start the loop */
+  bubbles.forEach(function(b){ b.classList.add('show'); }); booked.classList.add('show');
+  setTimeout(play, 2500);
+
+  /* ---------- calculator ---------- */
+  var q=document.getElementById('q'), r=document.getElementById('r'), c=document.getElementById('c');
+  function money(v){ return '$' + Math.round(v).toLocaleString('en-US'); }
+  function calc(){
+    var pol = Math.round(q.value * r.value / 100);
+    document.getElementById('qo').textContent = Number(q.value).toLocaleString('en-US');
+    document.getElementById('ro').textContent = r.value;
+    document.getElementById('co').textContent = money(c.value);
+    document.getElementById('pol').textContent = pol;
+    document.getElementById('tot').textContent = money(pol * c.value);
+  }
+  [q,r,c].forEach(function(i){ i.addEventListener('input', calc); });
+
+  /* ---------- reveals ---------- */
+  var rvs = document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target);} }); }, {rootMargin:'0px 0px -8% 0px'});
+    rvs.forEach(function(el){ var b=el.getBoundingClientRect(); if(b.top > innerHeight){ el.classList.add('pre'); io.observe(el);} });
+  }
+
+  /* ---------- highway canvas ---------- */
+  var cv = document.getElementById('road'), ctx = cv.getContext('2d'), t0 = 0;
+  function size(){ var d = Math.min(devicePixelRatio||1, 2); cv.width = cv.offsetWidth*d; cv.height = cv.offsetHeight*d; ctx.setTransform(d,0,0,d,0,0); }
+  function draw(t){
+    var w = cv.offsetWidth, h = cv.offsetHeight, vx = w*0.72, vy = h*0.38;
+    ctx.clearRect(0,0,w,h);
+    var g = ctx.createRadialGradient(vx,vy,0,vx,vy,w*0.6); g.addColorStop(0,'rgba(242,107,29,.16)'); g.addColorStop(1,'rgba(11,18,29,0)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
+    ctx.lineWidth = 1;
+    for(var i=-6;i<=6;i++){
+      ctx.strokeStyle = 'rgba(243,241,236,' + (0.05 - Math.abs(i)*0.003) + ')';
+      ctx.beginPath(); ctx.moveTo(vx,vy); ctx.lineTo(vx + i*w*0.22, h); ctx.stroke();
+    }
+    var speed = reduce ? 0 : t*0.00025;
+    for(var k=0;k<14;k++){
+      var z = ((k/14) + speed) % 1, zz = z*z;
+      var y = vy + (h - vy)*zz, len = 4 + 34*zz;
+      ctx.strokeStyle = 'rgba(242,107,29,' + (0.15 + 0.5*zz) + ')'; ctx.lineWidth = 1 + 3*zz;
+      [-1,1].forEach(function(s){
+        var x = vx + s*w*0.11*zz;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + s*w*0.11*(len/(h-vy))*1.5, y + len); ctx.stroke();
+      });
+    }
+    if(!reduce) requestAnimationFrame(draw);
+  }
+
+  var ticking = false;
+  addEventListener('scroll', function(){ if(!ticking){ ticking=true; requestAnimationFrame(function(){ tilt(); lightWords(); ticking=false; }); } }, {passive:true});
+  addEventListener('resize', function(){ size(); if(reduce) draw(0); lightWords(); });
+
+  size(); requestAnimationFrame(draw); tilt(); calc();
+  var start = 'en';
+  try{ start = localStorage.getItem('ffai-lang') || 'en'; }catch(e){}
+  if(location.hash === '#es') start = 'es';
+  if(start === 'es') setLang('es'); else splitWords();
+})();
+</script>
+</body>
+</html>
