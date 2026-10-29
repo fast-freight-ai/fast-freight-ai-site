@@ -124,6 +124,20 @@ section h2{font-size:clamp(34px,4.6vw,58px);line-height:1.04}
 .who{display:inline-block;margin-top:20px;font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fog)}
 .who.you{border-color:var(--signal);color:var(--signal)}
 
+/* TEAM */
+.team .wrap{padding-block:40px 120px;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.team h2 em{font-style:normal;color:var(--signal)}
+.team .sub{color:var(--fog);margin-top:18px;max-width:28em}
+.team-list{display:grid;gap:12px}
+.team-item{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:20px 22px;border-radius:18px;background:var(--asphalt);border:1px solid var(--line);min-width:0}
+.team-item .ico{width:38px;height:38px;border-radius:12px;background:var(--signal-soft);display:grid;place-items:center;color:var(--signal);font:700 15px var(--mono)}
+.team-item h3{font-size:18px;margin-bottom:4px}
+.team-item p{color:#B7BDC5;font-size:15px}
+.hours{margin-top:30px;display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.hours b{font:800 56px/1 var(--display);color:var(--signal);letter-spacing:-.03em}
+.hours span{color:#C9CDD3;max-width:16em}
+@media (max-width:900px){.team .wrap{grid-template-columns:1fr;gap:36px}}
+
 /* MATH */
 .math{background:radial-gradient(ellipse at 80% 0%,#F26B1D1f,transparent 55%),var(--asphalt);border-block:1px solid var(--line)}
 .math .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding-block:110px;align-items:center}
@@ -334,6 +348,23 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   </div>
 </section>
 
+<section class="team">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-es="Lo que realmente recibes">What you really get</div>
+      <h2 style="margin-top:18px" data-es="Un equipo de seguimiento. <em>Sin contratar a nadie.</em>">A follow-up team. <em>Without the payroll.</em></h2>
+      <p class="sub" data-es="Hoy el seguimiento vive en notas, en tu cabeza y en el celular de tu agente. Por ahí se escapan las ventas. Nosotros llevamos el control de cada cotización hasta que dice sí o no.">Right now your follow-up lives in sticky notes, in your head and on your agent's phone. That's where sales slip away. We track every quote until it says yes or no.</p>
+      <div class="hours"><b data-es="Horas">Hours</b><span data-es="de trabajo manual que tu equipo recupera cada semana para vender.">of manual work your team gets back every week, to spend selling.</span></div>
+    </div>
+    <div class="team-list">
+      <div class="team-item rv"><div class="ico">01</div><div><h3 data-es="Ninguna cotización se queda olvidada">No quote slips through</h3><p data-es="Cada persona que cotizaste queda en seguimiento hasta tener una respuesta. Nada se pierde entre el trabajo del día.">Every person you quoted stays in follow-up until there's an answer. Nothing gets lost in a busy day.</p></div></div>
+      <div class="team-item rv"><div class="ico">02</div><div><h3 data-es="Nosotros escribimos, contestamos e insistimos">We write, answer and follow up</h3><p data-es="Los textos, los emails y el &quot;escríbeme la próxima semana&quot;. Todo ese trabajo lo hacemos nosotros.">The texts, the emails, the "text me next week." All that work is on us.</p></div></div>
+      <div class="team-item rv"><div class="ico">03</div><div><h3 data-es="Sabes quién está listo y quién no">You know who's hot and who's not</h3><p data-es="Ves en qué va cada cliente: listo para comprar, más adelante o no le interesa. Sin adivinar.">See where every client stands: ready to buy, later, or not interested. No guessing.</p></div></div>
+      <div class="team-item rv"><div class="ico">04</div><div><h3 data-es="Tú solo cierras">You just close</h3><p data-es="A tu calendario solo llega la gente lista, con una nota de lo que necesita. Tu tiempo va a ventas, no a perseguir.">Only ready buyers reach your calendar, with a note on what they need. Your time goes to selling, not chasing.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <section class="math">
   <div class="wrap">
     <div>
@@ -410,7 +441,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
         </ul>
       </article>
     </div>
-    <div class="enterprise"><span data-es="<b>¿Más de 100 llamadas al mes?</b> Armamos un plan para tu volumen.">✦ <b>100+ calls a month?</b> We'll build a plan around your volume.</span><span class="sel">info@fast-freight-ai.com</span></div>
+    <div class="enterprise"><span data-es="<b>¿Más de 50 llamadas al mes?</b> Plan Enterprise desde $5,000/mes, hasta 200 llamadas agendadas.">✦ <b>More than 50 calls a month?</b> Enterprise from $5,000/month, up to 200 booked calls.</span><span class="sel">info@fast-freight-ai.com</span></div>
   </div>
 </section>
 
@@ -422,6 +453,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
     </div>
     <div>
       <details open><summary data-es="¿Le van a escribir a mis clientes sin que yo lo vea?">Will you message my clients without me seeing it?</summary><p data-es="No. Antes de empezar, tú revisas y apruebas los mensajes. Suenan como tu agencia, no como un robot.">No. Before anything goes out, you review and approve the messages. They sound like your agency, not a robot.</p></details>
+      <details><summary data-es="¿Ustedes venden leads?">Do you sell leads?</summary><p data-es="No. No vendemos ni compramos leads. Trabajamos solo con tus propias cotizaciones: personas que ya te pidieron precio. Las traemos de vuelta y les damos seguimiento a todas, para que cierres con gente que ya conoce tu agencia.">No. We don't sell or buy leads. We only work with your own quotes, people who already asked you for a price. We bring them back and keep track of every one, so you close with people who already know your agency.</p></details>
       <details><summary data-es="¿Qué pasa con mi lista?">What happens to my list?</summary><p data-es="Solo la usamos para tu campaña. Al terminar, la borramos de todos lados. Tus clientes siguen siendo tuyos.">We only use it for your campaign. When it's done, we delete it everywhere. Your clients stay yours.</p></details>
       <details><summary data-es="¿Tengo que cambiar mis sistemas?">Do I have to change my systems?</summary><p data-es="No. Para empezar solo necesitamos una hoja de cálculo con nombre, teléfono y email.">No. To start, we only need a spreadsheet with names, phones and emails.</p></details>
       <details><summary data-es="¿A quién le escriben?">Who do you contact?</summary><p data-es="Solo a tus propios clientes: personas que ya te pidieron cotización y te dieron su información para que les dieras seguimiento.">Only your own leads: people who already asked you for a quote and shared their info so you could follow up.</p></details>
