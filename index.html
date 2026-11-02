@@ -1,25 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fast Freight AI</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fast Freight AI · Meet Rigo</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect x=%274%27 y=%2713%27 width=%2756%27 height=%2740%27 rx=%2714%27 fill=%27%231B2638%27/%3E%3Ccircle cx=%2720%27 cy=%2730%27 r=%278.5%27 fill=%27%23FFF1C9%27/%3E%3Ccircle cx=%2744%27 cy=%2730%27 r=%278.5%27 fill=%27%23FFF1C9%27/%3E%3Cpath d=%27M23 45h18%27 stroke=%27%23F26B1D%27 stroke-width=%274%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"><title>Fast Freight AI</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="We bring back the trucking quotes that said 'let me think about it' and put the ready buyers on your calendar. Free test on 50 old quotes.">
+<meta name="description" content="Meet Rigo, the AI teammate for truck insurance agencies. Rigo texts every trucker who asked you for a quote, follows up until they're ready, and books them on your calendar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: night-highway dark world. One glowing phone carries the story; editorial type does the rest. Single committed dark look. */
+/* Layout: night-highway world. The hero IS the product: a live phone where the visitor texts Rigo like a trucker would. Single committed dark look. */
 :root{
-  --night:#0B121D;      /* page ground */
-  --asphalt:#141D2B;    /* raised surfaces */
-  --line:#24304299;     /* hairlines */
-  --chalk:#F3F1EC;      /* primary text */
-  --fog:#9AA3AE;        /* secondary text */
-  --signal:#F26B1D;     /* brand orange: actions + glow */
-  --signal-soft:#F26B1D22;
-  --go:#3DD68C;         /* "booked" state */
+  --night:#0B121D; --asphalt:#141D2B; --raise:#1A2536; --line:#24304299;
+  --chalk:#F3F1EC; --fog:#9AA3AE; --signal:#F26B1D; --signal-soft:#F26B1D22; --go:#3DD68C;
   --display:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
   --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -34,19 +23,156 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.
 p{margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
 .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
-.btn{display:inline-flex;align-items:center;gap:10px;font:600 16px/1 var(--body);text-decoration:none;padding:17px 24px;border-radius:12px;transition:transform .2s ease,box-shadow .2s ease,background .2s}
+section h2{font-size:clamp(34px,4.6vw,58px);line-height:1.04}
+h2 em,h1 em{font-style:normal;color:var(--signal)}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 16px/1 var(--body);text-decoration:none;padding:17px 24px;border-radius:12px;transition:transform .2s,box-shadow .2s;border:0;cursor:pointer}
 .btn-go{background:var(--signal);color:#fff;box-shadow:0 14px 40px -12px #F26B1Dcc}
-.btn-go:hover{transform:translateY(-2px);box-shadow:0 20px 50px -12px #F26B1Dee}
-.btn-ghost{border:1px solid #F3F1EC33;color:var(--chalk)}
-.btn-ghost:hover{border-color:var(--chalk)}
-.btn:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.btn-go:hover{transform:translateY(-2px)}
+.btn-ghost{border:1px solid #F3F1EC33;color:var(--chalk);background:none}
+.btn:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 
+/* Rigo avatar */
+.rigo-av{width:40px;height:40px;position:relative;flex:none;display:block}
+.rigo-av svg{width:100%;height:100%;display:block;overflow:visible;animation:rfloat 4s ease-in-out infinite}
+.rigo-av .eye{transform-box:fill-box;transform-origin:center;animation:rblink 5s infinite}
+.rigo-av .eyes{transition:transform .3s ease}
+.rigo-av .happy{opacity:0;transition:opacity .25s}
+.rigo-av.joy .eye{opacity:0}.rigo-av.joy .happy{opacity:1}
+.rigo-av.think .eyes{transform:translate(3px,-3px)!important}
+.rigo-av .led{display:none}
+.drive .lamp{opacity:.65!important}
+/* headings light up as Rigo passes */
+.lightup{position:relative}
+.lightup .sweep{position:absolute;inset:-12% -8%;pointer-events:none;background:linear-gradient(100deg,transparent 35%,#FFE3A840 50%,transparent 65%);transform:translateX(-110%);mix-blend-mode:screen;opacity:0}
+.lightup.on .sweep{animation:sweep 1.5s cubic-bezier(.3,.6,.3,1) forwards}
+@keyframes sweep{0%{opacity:1;transform:translateX(-110%)}100%{opacity:1;transform:translateX(110%)}}
+.lightup-wrap{overflow:hidden;padding:.06em 0 .1em;margin:-.06em 0 -.1em}
+/* final: headlights switch on */
+.final .rigo-av.lg{width:140px;height:140px}
+.final .carwrap{position:relative}
+.final .carwrap::after{content:"";position:absolute;left:50%;top:62%;width:760px;height:560px;max-width:180vw;transform:translateX(-50%);background:radial-gradient(ellipse 50% 100% at 50% 0,#FFE3A833,#FFE3A80d 55%,transparent 75%);clip-path:polygon(43% 0,57% 0,100% 100%,0 100%);opacity:0;transition:opacity 1.2s ease .4s;pointer-events:none;z-index:-1}
+.final .carwrap .rigo-av{filter:brightness(.45) saturate(.6);transition:filter 1s ease .2s}
+.final .carwrap.on::after{opacity:1}
+.final .carwrap.on .rigo-av{filter:none}
+.final .tagline{font:500 14px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#FFE3A8;margin-top:26px}
+.rigo-av.lg{width:76px;height:76px}
+.cav{width:44px;height:44px;border-radius:50%;background:linear-gradient(160deg,#A9B0BA,#7D8692);color:#fff;display:grid;place-items:center;font:700 19px var(--body);flex:none}
+.cmeta{display:flex;align-items:center;gap:6px}
+.chead .rigo-av{width:20px;height:20px}
+.memo{align-self:stretch;background:#fff;border:1px solid #E5E6E8;border-left:3px solid var(--signal);border-radius:12px;padding:9px 12px;font:400 12.5px/1.45 var(--body);color:#4A5260;animation:pop .4s}
+.memo b{display:block;font:700 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#C9500F;margin-bottom:3px}
+@keyframes rfloat{50%{transform:translateY(-1.5px)}}
+@keyframes rblink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+@keyframes rled{50%{opacity:.3}}
+.sys.punch{color:#C9500F;font-weight:700;text-align:center;padding:2px 10px}
+@media (prefers-reduced-motion:reduce){.rigo-av *,.rigo-av svg,.lightup .sweep{animation:none!important}}
+
+.sec-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:40px;grid-column:1/-1}
+.sec-cta span{font:500 13px var(--mono);color:var(--fog)}
+.offer-sub{color:var(--fog);font-size:18px;margin-top:14px}
+.stick{display:none}
+@media (max-width:760px){
+  .stick{display:flex;justify-content:center;position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:60;transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.2,1);box-shadow:0 18px 40px -12px #000}
+  .stick.show{transform:none}
+  footer{padding-bottom:80px}
+}
+.assure{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-wrap:wrap;gap:8px 18px;font:500 13px var(--mono);color:#C3C9D1}
+.assure li{display:flex;align-items:center;gap:7px}
+.assure li::before{content:"";width:14px;height:14px;border-radius:50%;background:#3DD68C22 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='m3.5 7 2.2 2.1 4.8-4.7' fill='none' stroke='%233DD68C' stroke-width='1.8'/%3E%3C/svg%3E") center/12px no-repeat;flex:none}
+.how .wrap{padding-block:100px 40px}
+.how h2 em{font-style:normal;color:var(--signal)}
+.steps{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:st}
+.steps li{position:relative;background:var(--asphalt);border:1px solid var(--line);border-radius:22px;padding:26px 24px 24px;counter-increment:st}
+.steps li::before{content:counter(st);position:absolute;right:20px;top:14px;font:800 54px/1 var(--display);color:#F26B1D26}
+.steps .when{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--signal)}
+.steps b{display:block;font:800 22px/1.2 var(--display);margin-top:10px}
+.steps p{color:var(--fog);font-size:15px;margin-top:8px}
+.note-sec .direct{font-size:15px!important;margin-top:18px}
+.note-sec .direct a{color:inherit;font-weight:700}
+@media (max-width:760px){.steps{grid-template-columns:1fr}.how .wrap{padding-block:72px 20px}}
+/* PHONE */
+.lv-stage{perspective:1400px;display:flex;flex-direction:column;align-items:center;position:relative}
+.lv-halo{position:absolute;width:520px;height:520px;max-width:120%;border-radius:50%;background:radial-gradient(circle,#F26B1D55,#F26B1D11 45%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(10px);animation:lvbreathe 6s ease-in-out infinite}
+@keyframes lvbreathe{50%{transform:translate(-50%,-50%) scale(1.08);opacity:.8}}
+.lv-phone{--rx:8deg;--ry:-16deg;width:300px;max-width:100%;aspect-ratio:9/18.5;border-radius:44px;background:#05080D;padding:12px;border:1px solid #2A3547;box-shadow:0 60px 120px -30px #000,0 0 0 6px #111a27,inset 0 0 0 1px #3a4659;transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .25s ease-out;position:relative}
+.lv-screen{height:100%;border-radius:33px;background:#F7F7F5;overflow:hidden;display:flex;flex-direction:column;color:#16202E}
+.lv-sbar{display:flex;justify-content:space-between;font:600 12px/1 var(--body);padding:14px 22px 8px}
+.lv-chead{display:flex;align-items:center;gap:10px;padding:8px 14px 12px;border-bottom:1px solid #E5E6E8}
+.lv-av{width:34px;height:34px;border-radius:50%;background:#E4E2DC;display:grid;place-items:center;font:700 12px var(--display)}
+.lv-cname{font:700 13px/1.2 var(--body)}.lv-cmeta{font:500 10.5px/1.3 var(--mono);color:#7A828C}
+.lv-msgs{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.lv-b{max-width:84%;padding:9px 12px;border-radius:17px;font:400 13px/1.38 var(--body);opacity:0;transform:translateY(10px) scale(.97);transition:all .45s cubic-bezier(.2,.8,.2,1)}
+.lv-b.show{opacity:1;transform:none}
+.lv-out{align-self:flex-end;background:var(--signal);color:#fff;border-bottom-right-radius:5px}
+.lv-in{align-self:flex-start;background:#E9EAEC;border-bottom-left-radius:5px}
+.lv-typing{align-self:flex-start;background:#E9EAEC;border-radius:17px;padding:11px 14px;display:none;gap:4px}
+.lv-typing.on{display:flex}
+.lv-typing i{width:6px;height:6px;border-radius:50%;background:#8B929B;animation:dot 1s infinite}
+.lv-typing i:nth-child(2){animation-delay:.15s}.lv-typing i:nth-child(3){animation-delay:.3s}
+
+.lv-booked{margin:0 12px 14px;border-radius:16px;background:#0B121D;color:#fff;padding:12px 14px;display:flex;gap:12px;align-items:center;opacity:0;transform:translateY(14px);transition:all .6s cubic-bezier(.2,.8,.2,1)}
+.lv-booked.show{opacity:1;transform:none}
+.lv-booked .lv-ck{width:30px;height:30px;border-radius:50%;background:var(--go);display:grid;place-items:center;flex:none}
+.lv-booked small{display:block;font:500 10px/1.2 var(--mono);letter-spacing:.1em;color:var(--go);text-transform:uppercase}
+.lv-booked strong{font:700 14px/1.3 var(--display)}
+.lv-booked .lv-bk-note{display:block;font:500 11px/1.35 var(--body);color:#C9CDD3;margin-top:3px}
+.lv-chip{position:absolute;font:500 11px/1 var(--mono);background:var(--asphalt);border:1px solid #2A3547;color:var(--chalk);padding:9px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 20px 40px -18px #000;animation:lvfloat 7s ease-in-out infinite}
+.lv-chip span{color:var(--signal)}
+.lv-chip.c1{top:14%;left:-6%}.lv-chip.c2{bottom:20%;right:-8%;animation-delay:-3s}
+@keyframes lvfloat{50%{transform:translateY(-10px)}}
+
+.lv-chip.c3{top:44%;left:-12%;display:flex;align-items:center;gap:8px;animation-delay:-5s}
+.lv-chip .rigo-av{width:22px;height:22px}
+.trysec{overflow:hidden;border-top:1px solid var(--line);background:linear-gradient(180deg,#0E1624,var(--night))}
+.trysec .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;padding-block:100px}
+.trysec h2 em{font-style:normal;color:var(--signal)}
+.trysec .sub{color:var(--fog);font-size:18px;margin-top:14px;max-width:30em}
+.try-list{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:10px}
+.try-list li{display:flex;gap:10px;align-items:center;font:500 16px var(--body);color:#D5D8DD}
+.try-list li::before{content:"→";color:var(--signal);font-weight:700}
+@media (max-width:900px){.trysec .wrap{grid-template-columns:1fr;gap:36px;padding-block:72px}.lv-chip.c1{left:0}.lv-chip.c2{right:0}.lv-chip.c3{left:0}}
+@media (max-width:520px){.lv-phone{width:270px}.lv-chip.c1{top:1%}.lv-chip.c3{top:46%}}
+@media (prefers-reduced-motion:reduce){.lv-b,.lv-booked{opacity:1!important;transform:none!important}}
+.trysec .wrap{display:block!important;padding-block:44px!important}
+.try-card{display:flex;align-items:center;justify-content:space-between;gap:24px;background:var(--asphalt);border:1px solid var(--line);border-radius:24px;padding:22px 26px}
+.try-head{display:flex;align-items:center;gap:18px}
+.try-head .rigo-av{width:56px;height:56px}
+.try-card h3{font:800 clamp(22px,2.6vw,30px)/1.15 var(--display);margin-top:8px}
+.try-card h3 em{font-style:normal;color:var(--signal)}
+.try-card p{color:var(--fog);font-size:15px;margin-top:6px}
+.try-card .btn{flex:none}
+.try-body{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center;margin-top:36px;animation:pop .5s cubic-bezier(.2,.8,.2,1)}
+.try-body[hidden]{display:none}
+@media (max-width:760px){.try-card{flex-direction:column;align-items:stretch;padding:20px}.try-head{align-items:flex-start}.try-head .rigo-av{width:44px;height:44px}.try-card .btn{justify-content:center}.try-body{grid-template-columns:1fr;gap:24px}}
+.mark-av{width:34px!important;height:34px!important}
+.mark-t{display:flex;flex-direction:column;line-height:1}
+.mark-n{font:800 22px/1 var(--display);letter-spacing:-.02em}
+.mark-t small{font:500 10.5px/1 var(--mono);letter-spacing:.06em;color:var(--fog);margin-top:4px}
+.mark-t small b{color:var(--signal);font-weight:500}
+.lv-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px;position:relative;z-index:2;max-width:520px}
+.lv-chips .lv-chip{position:static!important;display:inline-flex;align-items:center;gap:8px}
+.vs{border-block:1px solid var(--line);background:var(--asphalt)}
+.vs .wrap{padding-block:48px}
+.vs-line{font:700 clamp(22px,2.8vw,34px)/1.25 var(--display);letter-spacing:-.01em;color:var(--fog);max-width:900px}
+.vs-line b{color:var(--chalk);font-weight:800}
+.vs-pts{list-style:none;padding:0;margin:26px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.vs-pts li{font-size:15px;color:#C3C9D1;line-height:1.45;padding-left:16px;border-left:2px solid var(--signal)}
+.vs-pts b{color:var(--chalk);display:block}
+.fit{margin-top:10px;font:500 13px/1.5 var(--mono);color:var(--fog)}
+@media (max-width:760px){.vs-pts{grid-template-columns:1fr}.vs .wrap{padding-block:40px}}
+.card .per{font:600 13px var(--mono);color:var(--go);margin-top:-4px}
+.card.free .btn{margin-top:auto}
+.incl{margin-top:28px;border:1px solid var(--line);border-radius:22px;padding:24px 26px;background:var(--asphalt)}
+.incl h3{font:800 20px var(--display)}
+.incl ul{list-style:none;padding:0;margin:16px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px}
+.incl li{display:flex;gap:10px;font-size:15px;color:#D5D8DD;line-height:1.45}
+.incl li::before{content:"✓";color:var(--go);font-weight:700;flex:none}
+@media (max-width:760px){.incl ul{grid-template-columns:1fr}}
 /* NAV */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:#0B121Dcc;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
-.mark{font:800 19px/1 var(--display);letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.mark{font:800 19px/1 var(--display);text-decoration:none;display:flex;align-items:center;gap:10px}
 .mark b{color:var(--signal)}
-.mark svg{width:26px;height:26px}
 .nav-r{display:flex;align-items:center;gap:12px}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
 .lang button{background:none;border:0;color:var(--fog);font:500 12px/1 var(--mono);padding:7px 10px;border-radius:999px;cursor:pointer}
@@ -55,393 +181,519 @@ p{margin:0}
 
 /* HERO */
 .hero{position:relative;overflow:hidden;isolation:isolate}
-#road{position:absolute;inset:0;width:100%;height:100%;z-index:-1;opacity:.9}
+#road{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
 .hero::after{content:"";position:absolute;inset:auto 0 0;height:160px;background:linear-gradient(transparent,var(--night));z-index:-1}
-.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-block:72px 96px}
-.hero h1{font-size:clamp(42px,6.4vw,84px);line-height:.98;font-weight:800;margin-top:18px}
-.hero h1 em{font-style:normal;color:var(--signal)}
-.hero .lede{margin-top:24px;font-size:19px;color:#C9CDD3;max-width:30em}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;padding-block:64px 90px}
+.intro{display:inline-flex;align-items:center;gap:12px;background:#141D2Bcc;border:1px solid var(--line);border-radius:999px;padding:6px 16px 6px 6px}
+.intro .rigo-av{width:38px;height:38px}
+.intro span{font:500 13px var(--mono);color:var(--fog)}
+.intro b{color:var(--chalk);font-weight:500}
+.hero h1{font-size:clamp(42px,6vw,80px);line-height:.99;font-weight:800;margin-top:22px}
+.hero .lede{margin-top:22px;font-size:19px;color:#C9CDD3;max-width:31em}
 .hero .lede b{color:var(--chalk);font-weight:600}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.fine{margin-top:16px;font:500 12px/1.5 var(--mono);color:var(--fog);letter-spacing:.04em}
+.chan{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chan span{font:500 12px var(--mono);border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--fog)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.fine{margin-top:14px;font:500 12px/1.5 var(--mono);color:var(--fog);letter-spacing:.04em}
 
-/* PHONE */
-.stage{perspective:1400px;display:flex;justify-content:center;position:relative}
-.halo{position:absolute;width:520px;height:520px;max-width:120%;border-radius:50%;background:radial-gradient(circle,#F26B1D55,#F26B1D11 45%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(10px);animation:breathe 6s ease-in-out infinite}
+/* DEMO PHONE */
+.demo{position:relative;display:flex;flex-direction:column;align-items:center}
+.halo{position:absolute;width:520px;height:520px;max-width:120%;border-radius:50%;background:radial-gradient(circle,#F26B1D55,#F26B1D11 45%,transparent 70%);top:45%;left:50%;transform:translate(-50%,-50%);filter:blur(10px);animation:breathe 6s ease-in-out infinite;z-index:-1}
 @keyframes breathe{50%{transform:translate(-50%,-50%) scale(1.08);opacity:.8}}
-.phone{--rx:8deg;--ry:-16deg;width:300px;max-width:100%;aspect-ratio:9/18.5;border-radius:44px;background:#05080D;padding:12px;border:1px solid #2A3547;box-shadow:0 60px 120px -30px #000,0 0 0 6px #111a27,inset 0 0 0 1px #3a4659;transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .25s ease-out;position:relative}
-.screen{height:100%;border-radius:33px;background:#F7F7F5;overflow:hidden;display:flex;flex-direction:column;color:#16202E}
-.sbar{display:flex;justify-content:space-between;font:600 12px/1 var(--body);padding:14px 22px 8px}
-.chead{display:flex;align-items:center;gap:10px;padding:8px 14px 12px;border-bottom:1px solid #E5E6E8}
-.av{width:34px;height:34px;border-radius:50%;background:#E4E2DC;display:grid;place-items:center;font:700 12px var(--display)}
-.cname{font:700 13px/1.2 var(--body)}.cmeta{font:500 10.5px/1.3 var(--mono);color:#7A828C}
-.msgs{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden}
-.b{max-width:84%;padding:9px 12px;border-radius:17px;font:400 13px/1.38 var(--body);opacity:0;transform:translateY(10px) scale(.97);transition:all .45s cubic-bezier(.2,.8,.2,1)}
-.b.show{opacity:1;transform:none}
-.out{align-self:flex-end;background:var(--signal);color:#fff;border-bottom-right-radius:5px}
-.in{align-self:flex-start;background:#E9EAEC;border-bottom-left-radius:5px}
-.typing{align-self:flex-start;background:#E9EAEC;border-radius:17px;padding:11px 14px;display:none;gap:4px}
-.typing.on{display:flex}
+.try{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.try i{width:8px;height:8px;border-radius:50%;background:var(--signal);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.phone{width:350px;max-width:100%;height:620px;border-radius:46px;background:#05080D;padding:11px;border:1px solid #2A3547;box-shadow:0 60px 120px -30px #000,0 0 0 6px #111a27}
+.screen{height:100%;border-radius:36px;background:#F7F7F5;overflow:hidden;display:flex;flex-direction:column;color:#16202E}
+.chead{display:flex;align-items:center;gap:10px;padding:16px 16px 12px;border-bottom:1px solid #E5E6E8;background:#fff}
+.cname{font:700 14px/1.2 var(--body)}.cmeta{font:500 11px/1.3 var(--mono);color:#1FAE6B}
+.feed{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.b{max-width:84%;padding:9px 12px;border-radius:17px;font:400 14px/1.4 var(--body);animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}}
+.rigo{align-self:flex-start;background:#E9EAEC;border-bottom-left-radius:5px}
+.me{align-self:flex-end;background:var(--signal);color:#fff;border-bottom-right-radius:5px}
+.sys{align-self:center;font:500 11px var(--mono);color:#7A828C}
+.typing{align-self:flex-start;background:#E9EAEC;border-radius:17px;padding:11px 14px;display:flex;gap:4px}
 .typing i{width:6px;height:6px;border-radius:50%;background:#8B929B;animation:dot 1s infinite}
 .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
 @keyframes dot{50%{transform:translateY(-3px);opacity:.5}}
-.booked{margin:0 12px 14px;border-radius:16px;background:#0B121D;color:#fff;padding:12px 14px;display:flex;gap:12px;align-items:center;opacity:0;transform:translateY(14px);transition:all .6s cubic-bezier(.2,.8,.2,1)}
-.booked.show{opacity:1;transform:none}
-.booked .ck{width:30px;height:30px;border-radius:50%;background:var(--go);display:grid;place-items:center;flex:none}
-.booked small{display:block;font:500 10px/1.2 var(--mono);letter-spacing:.1em;color:var(--go);text-transform:uppercase}
-.booked strong{font:700 14px/1.3 var(--display)}
-.booked .bk-note{display:block;font:500 11px/1.35 var(--body);color:#C9CDD3;margin-top:3px}
-.chip{position:absolute;font:500 11px/1 var(--mono);background:var(--asphalt);border:1px solid #2A3547;color:var(--chalk);padding:9px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 20px 40px -18px #000;animation:float 7s ease-in-out infinite}
-.chip span{color:var(--signal)}
-.chip.c1{top:14%;left:-6%}.chip.c2{bottom:20%;right:-8%;animation-delay:-3s}
-@keyframes float{50%{transform:translateY(-10px)}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px 14px;border-top:1px solid #E5E6E8;background:#fff;min-height:58px;align-content:flex-start}
+.chip{border:1.5px solid var(--signal);color:#C9500F;background:#FFF4ED;border-radius:999px;padding:8px 12px;font:600 13px var(--body);cursor:pointer;animation:pop .3s}
+.chip:hover{background:var(--signal);color:#fff}
+.composer{display:flex;gap:8px;align-items:center;padding:10px 12px 14px;border-top:1px solid #E5E6E8;background:#fff}
+.composer input{flex:1;min-width:0;border:1.5px solid #D9DCE0;border-radius:999px;padding:11px 16px;font:400 16px/1.2 var(--body);color:#16202E;background:#F7F7F5;outline:none;transition:border-color .2s,box-shadow .2s}
+.composer input:focus{border-color:var(--signal);box-shadow:0 0 0 4px #F26B1D22;background:#fff}
+.composer.nudge input{animation:nudge 2.2s ease-in-out infinite}
+@keyframes nudge{50%{border-color:var(--signal);box-shadow:0 0 0 5px #F26B1D26}}
+.composer button{width:42px;height:42px;border-radius:50%;border:0;background:var(--signal);display:grid;place-items:center;cursor:pointer;flex:none;transition:transform .15s}
+.composer button:active{transform:scale(.92)}
+.composer button:disabled{background:#C9CDD3;cursor:default}
+.sys.hint{background:#FFF4ED;color:#C9500F;border:1px dashed #F26B1D88;border-radius:12px;padding:8px 12px;text-align:center;line-height:1.45;font-weight:600}
+.demo-ctl{display:flex;gap:18px;justify-content:center;align-items:center;margin-top:16px}
+.replay{display:inline-flex;align-items:center;gap:8px;background:#141D2B;border:1px solid var(--line);color:var(--chalk);border-radius:999px;padding:10px 16px;font:600 14px var(--body);cursor:pointer}
+.replay:hover{border-color:var(--signal)}
+.replay i{width:0;height:0;border-left:9px solid var(--signal);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.file{margin-top:4px;background:#0B121D;color:#fff;border-radius:16px;padding:14px;animation:pop .5s;align-self:stretch}
+.file .fh{display:flex;justify-content:space-between;align-items:center;font:800 14px var(--display)}
+.file .fh span{font:500 10px var(--mono);letter-spacing:.1em;color:var(--go)}
+.file .row{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:6px 0;border-bottom:1px solid #ffffff14}
+.file .row span:first-child{color:#9AA3AE}
+.file .row span:last-child{font-weight:600;text-align:right}
+.file .row.hot span:last-child{color:#FF8A45}
+.restart{margin-top:14px;background:none;border:0;color:var(--fog);font:500 12px var(--mono);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 
-/* PROMISE STRIP */
+/* STRIP */
 .strip{border-block:1px solid var(--line);background:var(--asphalt)}
 .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-block:22px;gap:16px}
 .strip div{display:flex;gap:10px;align-items:flex-start;font:500 14px/1.4 var(--body);color:#D5D8DD}
 .strip svg{flex:none;margin-top:2px}
 
+/* PROOF */
+.proof .wrap{padding-block:110px 30px}
+.proof h2{font:800 clamp(38px,5.4vw,64px)/1.02 var(--display);letter-spacing:-.03em;max-width:820px;margin-top:14px}
+.proof h2 em{font-style:normal;color:var(--signal)}
+.proof .lede{color:var(--fog);font-size:18px;margin-top:16px;max-width:640px}
+.stat{display:grid;grid-template-columns:minmax(220px,.8fr) 1.2fr;gap:40px;align-items:center;padding:44px 0;border-bottom:1px solid var(--line)}
+.stat:first-of-type{margin-top:36px;border-top:1px solid var(--line)}
+.num{font:800 clamp(84px,12vw,150px)/.9 var(--display);letter-spacing:-.05em;color:var(--signal);font-variant-numeric:tabular-nums}
+.num small{font-size:.42em;letter-spacing:-.02em;margin-left:6px}
+.stat p{font:600 clamp(20px,2.2vw,26px)/1.35 var(--body);color:var(--chalk)}
+.stat .fix{display:flex;gap:10px;align-items:center;margin-top:16px;font:500 15px/1.4 var(--body);color:var(--go)}
+.stat .fix .rigo-av{width:30px;height:30px}
+.src{font:500 12px/1.5 var(--mono);color:var(--fog);margin-top:22px}
+.rigo-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+.rigo-nums div{background:var(--asphalt);border:1px solid var(--line);border-radius:18px;padding:22px}
+.rigo-nums b{display:block;font:800 40px/1 var(--display);color:var(--go);letter-spacing:-.02em}
+.rigo-nums span{display:block;margin-top:10px;font:500 14px/1.4 var(--body);color:#D5D8DD}
+@media (max-width:760px){.stat{grid-template-columns:1fr;gap:10px;padding:34px 0}.rigo-nums{grid-template-columns:1fr 1fr}.rigo-nums b{font-size:28px;white-space:nowrap}.rigo-nums div{padding:18px}.proof .wrap{padding-block:72px 10px}}
+
+/* JOBS */
+.jobs .wrap{padding-block:110px 40px}
+.jobs-head{max-width:760px}
+.jobs-head p{color:var(--fog);margin-top:16px;font-size:18px}
+.job{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:70px}
+.job:nth-child(even) .job-vis{order:-1}
+.job .num{font:500 12px var(--mono);letter-spacing:.14em;color:var(--signal);text-transform:uppercase}
+.job h3{font-size:clamp(28px,3.2vw,40px);line-height:1.08;margin-top:12px}
+.job .do{margin-top:16px;display:grid;gap:8px}
+.job .do div{display:grid;grid-template-columns:62px 1fr;gap:12px;font-size:16px;color:#C9CDD3}
+.job .do b{font:500 11px/2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fog)}
+.job .do div:last-child b{color:var(--signal)}
+.job-vis{background:var(--asphalt);border:1px solid var(--line);border-radius:24px;padding:24px;min-width:0}
+.mini{display:flex;flex-direction:column;gap:8px}
+.mini .b{animation:none;font-size:14.5px}
+.mini .sys{color:var(--fog)}
+.mini .rigo{background:#243045;color:var(--chalk)}
+.tag-in{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tag-in span{font:500 12px var(--mono);padding:7px 10px;border-radius:10px;background:var(--raise);color:#C9CDD3}
+.tag-in span b{color:var(--signal);font-weight:500}
+.cal{display:grid;gap:8px}
+.slot{display:grid;grid-template-columns:70px 1fr;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--raise);font-size:14px}
+.slot time{font:500 12px var(--mono);color:var(--fog)}
+.slot.on{background:#3DD68C18;border:1px solid #3DD68C55}
+.slot.on b{color:var(--go)}
+.slot small{display:block;color:var(--fog);font-size:12px;margin-top:2px}
+
 /* LETTER */
-.letter .wrap{padding-block:120px;max-width:980px}
+.letter .wrap{padding-block:110px;max-width:980px}
 .letter .eyebrow{margin-bottom:28px}
-.scroll-words{font:700 clamp(28px,4.2vw,52px)/1.18 var(--display);letter-spacing:-.025em}
+.scroll-words{font:700 clamp(28px,4.2vw,50px)/1.18 var(--display);letter-spacing:-.025em}
 .scroll-words .w{opacity:.28;transition:opacity .25s linear}
 .scroll-words .w.lit{opacity:1}
 .scroll-words .hot{color:var(--signal)}
-.letter .sig{margin-top:40px;color:var(--fog);font-size:17px;max-width:36em}
 
-/* HOW */
-section h2{font-size:clamp(34px,4.6vw,58px);line-height:1.04}
-.how .wrap{padding-block:40px 120px}
-.how-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:48px}
-.how-head p{color:var(--fog);max-width:26em}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
-.step{background:var(--asphalt);border:1px solid var(--line);border-radius:22px;padding:30px 28px 32px;position:relative;overflow:hidden;min-width:0}
-.step .n{font:800 88px/.8 var(--display);color:transparent;-webkit-text-stroke:1.5px #F26B1D88;letter-spacing:-.04em}
-.step h3{font-size:24px;margin:22px 0 10px}
-.step p{color:#B7BDC5;font-size:16px}
-.who{display:inline-block;margin-top:20px;font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:8px 11px;border-radius:999px;border:1px solid var(--line);color:var(--fog)}
-.who.you{border-color:var(--signal);color:var(--signal)}
-
-/* TEAM */
-.team .wrap{padding-block:40px 120px;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
-.team h2 em{font-style:normal;color:var(--signal)}
-.team .sub{color:var(--fog);margin-top:18px;max-width:28em}
-.team-list{display:grid;gap:12px}
-.team-item{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:20px 22px;border-radius:18px;background:var(--asphalt);border:1px solid var(--line);min-width:0}
-.team-item .ico{width:38px;height:38px;border-radius:12px;background:var(--signal-soft);display:grid;place-items:center;color:var(--signal);font:700 15px var(--mono)}
-.team-item h3{font-size:18px;margin-bottom:4px}
-.team-item p{color:#B7BDC5;font-size:15px}
-.hours{margin-top:30px;display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.hours b{font:800 56px/1 var(--display);color:var(--signal);letter-spacing:-.03em}
-.hours span{color:#C9CDD3;max-width:16em}
-@media (max-width:900px){.team .wrap{grid-template-columns:1fr;gap:36px}}
+/* CONTROL */
+.ctrl{background:var(--asphalt);border-block:1px solid var(--line)}
+.ctrl .wrap{padding-block:100px;display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.ctrl-list{display:grid;gap:12px;margin-top:28px}
+.ctrl-list div{display:flex;gap:14px;align-items:flex-start;font-size:17px}
+.ctrl-list svg{flex:none;margin-top:3px}
+.not{background:var(--night);border:1px solid var(--line);border-radius:24px;padding:30px;align-self:start}
+.not h3{font-size:22px}
+.not ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
+.not li{display:flex;gap:12px;font-size:16px;color:#C9CDD3}
+.not li::before{content:"✕";color:#FF6B6B;font-weight:700}
+.not p{margin-top:18px;font-size:15px;color:var(--fog)}
 
 /* MATH */
-.math{background:radial-gradient(ellipse at 80% 0%,#F26B1D1f,transparent 55%),var(--asphalt);border-block:1px solid var(--line)}
 .math .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding-block:110px;align-items:center}
-.math h2 em{font-style:normal;color:var(--signal)}
 .math .sub{color:var(--fog);margin-top:18px;max-width:28em}
-.calc{background:var(--night);border:1px solid var(--line);border-radius:24px;padding:30px;min-width:0}
-.field{margin-bottom:26px}
-.field label{display:flex;justify-content:space-between;font:500 14px/1 var(--body);color:#C9CDD3;margin-bottom:14px}
+.calc{background:var(--asphalt);border:1px solid var(--line);border-radius:24px;padding:30px;min-width:0}
+.field{margin-bottom:24px}
+.field label{display:flex;justify-content:space-between;font:500 14px/1 var(--body);color:#C9CDD3;margin-bottom:12px}
 .field output{font:500 14px var(--mono);color:var(--chalk)}
 input[type=range]{width:100%;accent-color:var(--signal);height:24px}
-.result{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.result{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
 .result small{display:block;font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fog)}
-.big{font:800 clamp(44px,6vw,64px)/1 var(--display);color:var(--signal);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.big{font:800 clamp(44px,6vw,62px)/1 var(--display);color:var(--signal);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .policies{font:700 20px var(--display);font-variant-numeric:tabular-nums}
-.calc .note{margin-top:16px;font:400 12px/1.5 var(--body);color:var(--fog)}
-
-/* NIGHT (speed to lead) */
-.night .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;padding-block:120px}
-.clock{font:800 clamp(80px,12vw,150px)/.85 var(--display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
-.clock span{color:var(--signal)}
-.night .eyebrow{margin-bottom:22px}
-.night p.big-p{font-size:20px;color:#C9CDD3;margin-top:22px;max-width:28em}
-.night p.big-p b{color:var(--chalk)}
-.timeline{display:grid;gap:12px;margin-top:30px}
-.tl{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:start;padding:14px 16px;border-radius:14px;background:var(--asphalt);border:1px solid var(--line)}
-.tl time{font:500 13px/1.5 var(--mono);color:var(--signal)}
-.tl div{font-size:15px;color:#D5D8DD}
-.tag{display:inline-block;margin-top:24px;font:500 12px/1.4 var(--mono);color:var(--fog);border:1px dashed #F3F1EC33;border-radius:10px;padding:10px 12px}
+.calc .note{margin-top:14px;font-size:12px;color:var(--fog)}
 
 /* OFFER */
-.offer .wrap{padding-block:40px 120px}
-.offer h2{max-width:14em}
-.offer-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px;margin-top:48px}
-.card{border:1px solid var(--line);border-radius:22px;padding:30px 28px;background:var(--asphalt);display:flex;flex-direction:column;gap:14px;min-width:0}
+.offer .wrap{padding-block:40px 110px}
+.offer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:16px;margin-top:44px}
+.card{border:1px solid var(--line);border-radius:22px;padding:26px 24px;background:var(--asphalt);display:flex;flex-direction:column;gap:12px;min-width:0}
 .card.free{background:linear-gradient(160deg,#F26B1D,#C9500F);border:0;color:#fff;box-shadow:0 30px 80px -30px #F26B1Daa}
 .card .label{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
-.card .price{font:800 48px/1 var(--display);letter-spacing:-.03em}
-.card .price small{font:600 15px var(--body);letter-spacing:0;opacity:.8}
-.card ul{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:10px;font-size:15px}
-.card li{display:flex;gap:10px}
-.card li::before{content:"";flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%;background:currentColor;opacity:.25;box-shadow:inset 0 0 0 4px var(--asphalt)}
-.card.free li::before{opacity:1;background:#fff;box-shadow:inset 0 0 0 4px #E05D17}
-.card .muted{color:var(--fog);font-size:14px}
+.card .price{font:800 40px/1 var(--display);letter-spacing:-.03em}
+.card .price small{font:600 14px var(--body);letter-spacing:0;opacity:.8}
+.card p{font-size:14px;color:var(--fog)}
+.card.free p{color:#fff;opacity:.92}
+.card ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:14px}
+.card li::before{content:"✓  ";font-weight:700}
 .card.free .btn{background:#fff;color:#0B121D;margin-top:auto;justify-content:center}
-.card .btn-ghost{margin-top:auto;justify-content:center}
-.enterprise{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border:1px dashed #F3F1EC33;border-radius:18px;padding:20px 24px;color:#C9CDD3}
-.enterprise b{color:var(--chalk);font-family:var(--display)}
+.card .card-cta{margin-top:auto;justify-content:center;padding:13px 16px;font-size:15px}
+.card .card-cta:hover{border-color:var(--signal);color:#fff}
+.offer-note{margin-top:18px;font:500 13px var(--mono);color:var(--fog);text-align:center}
 
 /* FAQ */
-.faq .wrap{padding-block:40px 120px;display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
-details{border-bottom:1px solid var(--line);padding-block:22px}
+.faq .wrap{padding-block:30px 110px;display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+details{border-bottom:1px solid var(--line);padding-block:20px}
 summary{cursor:pointer;list-style:none;font:700 19px/1.35 var(--display);display:flex;justify-content:space-between;gap:16px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:var(--signal);font-weight:500;transition:transform .2s}
-details[open] summary::after{transform:rotate(45deg)}
-details p{margin-top:12px;color:#B7BDC5;max-width:40em}
+summary::after{content:"+";color:var(--signal)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;color:#B7BDC5;max-width:40em}
 
 /* NOTE */
 .note-sec{background:var(--chalk);color:#16202E}
-.note-sec .wrap{max-width:820px;padding-block:110px}
+.note-sec .wrap{max-width:820px;padding-block:100px}
 .note-sec .eyebrow{color:#C9500F}
-.note-sec p{font-size:20px;line-height:1.65;margin-top:22px}
-.note-sec .ps{font-size:18px;border-top:1px solid #16202E22;padding-top:22px;margin-top:30px}
-.note-sec .name{font:800 26px var(--display);margin-top:34px}
+.note-sec p{font-size:20px;line-height:1.65;margin-top:20px}
+.note-sec .name{font:800 26px var(--display);margin-top:30px}
 .note-sec .role{font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#5A636E;margin-top:6px}
 
 /* FINAL */
-.final{position:relative;overflow:hidden;text-align:center}
-.final .wrap{padding-block:130px}
+.final{position:relative;overflow:hidden;text-align:center;isolation:isolate}
+.final .wrap{padding-block:120px;display:flex;flex-direction:column;align-items:center}
 .final::before{content:"";position:absolute;left:50%;top:60%;width:900px;height:900px;max-width:200%;transform:translate(-50%,-50%);background:radial-gradient(circle,#F26B1D40,transparent 60%);z-index:-1}
-.final{isolation:isolate}
-.final h2{font-size:clamp(40px,6.4vw,82px);line-height:1;max-width:12em;margin:0 auto}
-.final p{color:#C9CDD3;margin:22px auto 0;max-width:30em;font-size:19px}
+.final h2{font-size:clamp(40px,6vw,78px);line-height:1;max-width:12em;margin-top:22px}
+.final h2 em{font-style:normal;color:var(--signal)}
+.final p{color:#C9CDD3;margin-top:20px;max-width:30em;font-size:19px}
 .final .cta-row{justify-content:center}
-.spots{display:inline-flex;gap:8px;margin-top:28px;align-items:center;font:500 13px var(--mono);color:var(--fog)}
-.spots i{width:10px;height:10px;border-radius:50%;background:var(--signal)}
-.spots i.o{background:none;border:1.5px solid var(--signal)}
 footer{border-top:1px solid var(--line)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:30px;font:500 13px var(--mono);color:var(--fog)}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:28px;font:500 13px var(--mono);color:var(--fog)}
 .sel{user-select:all;color:var(--chalk)}
 
-/* reveal */
 .rv{transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
 .js .rv.pre{transform:translateY(26px);opacity:.4}
 
-@media (max-width:900px){
-  .hero .wrap,.math .wrap,.night .wrap,.faq .wrap{grid-template-columns:1fr;gap:44px}
-  .hero .wrap{padding-block:44px 72px}
-  .steps,.offer-grid{grid-template-columns:1fr}
-  .strip .wrap{grid-template-columns:1fr 1fr}
-  .chip.c1{left:0}.chip.c2{right:0}
+@media (max-width:980px){
+  .offer-grid{grid-template-columns:1fr 1fr}
 }
-@media (max-width:520px){
+@media (max-width:900px){
+  .hero .wrap,.math .wrap,.faq .wrap,.ctrl .wrap,.job{grid-template-columns:1fr;gap:36px}
+  .job:nth-child(even) .job-vis{order:0}
+  .hero .wrap{padding-block:40px 70px}
+  .strip .wrap{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
   body{font-size:16px}
-  .strip .wrap{grid-template-columns:1fr}
+  .strip .wrap,.offer-grid{grid-template-columns:1fr}
   .nav .btn{display:none}
-  .phone{width:270px}
-  .chip.c1{top:1%}
-  .letter .wrap,.math .wrap,.night .wrap,.note-sec .wrap,.final .wrap{padding-block:80px}
-  .tl{grid-template-columns:64px 1fr}
+  .phone{height:580px}
+  .jobs .wrap,.letter .wrap,.math .wrap,.ctrl .wrap,.note-sec .wrap,.final .wrap{padding-block:72px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-  .b,.booked{opacity:1;transform:none}
   .scroll-words .w{opacity:1}
 }
 </style>
-</head>
-<body>
-
+</head><body>
 <nav class="nav" aria-label="Main">
   <div class="wrap">
-    <a class="mark" href="#top" aria-label="Fast Freight AI home">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 6.5v9C4 23 9.2 28.3 16 30c6.8-1.7 12-7 12-14.5v-9L16 2Z" fill="#F26B1D"/><path d="M13 25 15 9h2l2 16" fill="none" stroke="#0B121D" stroke-width="2"/><path d="M16 12v2m0 3v2m0 3v2" stroke="#0B121D" stroke-width="1.6"/></svg>
-      <span>Fast Freight <b>AI</b></span>
+    <a class="mark" href="#top" aria-label="Rigo by Fast Freight AI, home">
+      <span class="rigo-av mark-av"></span>
+      <span class="mark-t"><span class="mark-n">Rigo</span><small>by Fast Freight <b>AI</b></small></span>
     </a>
     <div class="nav-r">
       <div class="lang" role="group" aria-label="Language">
         <button type="button" id="lang-en" aria-pressed="true">EN</button>
         <button type="button" id="lang-es" aria-pressed="false">ES</button>
       </div>
-      <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Prueba gratis">Free test</a>
+      <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Empezar">Get started</a>
     </div>
   </div>
 </nav>
+
 
 <header class="hero" id="top">
   <canvas id="road" aria-hidden="true"></canvas>
   <div class="wrap">
     <div>
       <div class="eyebrow" data-es="Para agencias de seguros de camiones">For trucking insurance agencies</div>
-      <h1 data-es="Tus próximas pólizas <em>ya te pidieron cotización.</em>">Your next policies <em>already asked you for a quote.</em></h1>
-      <p class="lede" data-es="Cada camionero que dijo <b>“lo voy a pensar”</b> es un cliente que ya te costó conseguir. Nosotros le volvemos a escribir y te ponemos a los que están <b>listos para comprar</b> directo en tu calendario.">Every trucker who said <b>“let me think about it”</b> is a client you already paid to get. We reach back out to them and put the ones <b>ready to buy</b> straight on your calendar.</p>
+      <h1 data-es="Habla solo con camioneros <em>listos para comprar.</em>">Only talk to truckers <em>ready to buy.</em></h1>
+      <p class="lede" data-es="Nada de listas en frío ni mensajes masivos. <b>Rigo</b> solo le escribe a camioneros que <b>ya te pidieron cotización</b>, se acuerda de cada conversación aunque hayan pasado meses, y agenda a los que están listos en tu calendario. <b>Tú solo cierras.</b>">No cold lists. No blasting strangers. <b>Rigo</b> only texts truckers who <b>already asked you for a quote</b>, remembers every conversation, even months later, and books the ready ones on your calendar. <b>You just close.</b></p>
       <div class="cta-row">
-        <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero mi prueba gratis →">Claim my free test →</a>
-        <a class="btn btn-ghost" href="#how" data-es="Cómo funciona">See how it works</a>
+        <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Prueba a Rigo gratis →">Try Rigo free →</a>
+        <a class="btn btn-ghost" href="#try" data-es="Pruébalo tú">Try it yourself</a>
       </div>
-      <p class="fine" data-es="50 cotizaciones viejas · $0 · lista en una semana aprox. · tú apruebas cada mensaje">50 old quotes · $0 · live in about a week · you approve every message</p>
+<p class="fine" data-es="$0 por adelantado · tus primeras 3 llamadas gratis · lista en una semana aprox. · tú apruebas cada mensaje">$0 upfront · first 3 booked calls free · live in about a week · you approve every message</p>
     </div>
-    <div class="stage" aria-label="Example conversation" role="img">
-      <div class="halo"></div>
-      <div class="phone" id="phone">
-        <div class="screen">
-          <div class="sbar"><span>9:41</span><span>●●● 5G</span></div>
-          <div class="chead"><div class="av">MR</div><div><div class="cname">Mike R. · Owner-operator</div><div class="cmeta" data-es="Cotizó en agosto · no cerró">Quoted in August · didn't close</div></div></div>
-          <div class="msgs" id="msgs">
-            <div class="b out" data-es="¡Hola Mike! Soy Sara de Ridgeline Insurance. En agosto nos pediste cotización para tu camión, ¿todavía buscas seguro?">Hi Mike! It's Sarah with Ridgeline Insurance. You asked us for a truck quote back in August, still need coverage?</div>
-            <div class="b in" data-es="¡Sí! De hecho ya son 2 camiones 😅 mi póliza vence el próximo mes">Hey yes! Actually it's 2 trucks now 😅 my policy renews next month</div>
-            <div class="b out" data-es="¡Felicidades por el camión nuevo! ¿Te llama nuestro agente mañana, 10am o 2pm?">Congrats on the new truck! Can our agent call you tomorrow, 10am or 2pm?</div>
-            <div class="b in" data-es="A las 10 👍">10 works 👍</div>
-            <div class="typing" id="typing"><i></i><i></i><i></i></div>
+    <div class="lv-stage" aria-label="Example conversation" role="img">
+      <div class="lv-halo"></div>
+      <div class="lv-phone" id="lv-phone">
+        <div class="lv-screen">
+          <div class="lv-sbar"><span>9:41</span><span>●●● 5G</span></div>
+          <div class="lv-chead"><div class="lv-av">MR</div><div><div class="lv-cname">Mike R. · Owner-operator</div><div class="lv-cmeta" data-es="Cotizó en agosto · no cerró">Quoted in August · didn't close</div></div></div>
+          <div class="lv-msgs" id="lv-msgs">
+            <div class="lv-b lv-out" data-es="¡Hola Mike! Soy Sara de Ridgeline Insurance. En agosto nos pediste cotización para tu camión, ¿todavía buscas seguro?">Hi Mike! It's Sarah with Ridgeline Insurance. You asked us for a truck quote back in August, still need coverage?</div>
+            <div class="lv-b lv-in" data-es="¡Sí! De hecho ya son 2 camiones, mi póliza vence el próximo mes">Hey yes! Actually it's 2 trucks now, my policy renews next month</div>
+            <div class="lv-b lv-out" data-es="¡Felicidades por el camión nuevo! ¿Te llama nuestro agente mañana, 10am o 2pm?">Congrats on the new truck! Can our agent call you tomorrow, 10am or 2pm?</div>
+            <div class="lv-b lv-in" data-es="A las 10 está bien">10 works</div>
+            <div class="lv-typing" id="lv-typing"><i></i><i></i><i></i></div>
           </div>
-          <div class="booked" id="booked">
-            <div class="ck"><svg width="14" height="14" viewBox="0 0 14 14"><path d="m2 7 3.2 3L12 3.5" fill="none" stroke="#0B121D" stroke-width="2.2"/></svg></div>
-            <div><small data-es="Agendado en tu calendario">Booked on your calendar</small><strong data-es="Mike R. · Jue 10:00 AM">Mike R. · Thu 10:00 AM</strong><span class="bk-note" data-es="2 camiones · vence el próximo mes · listo para comprar">2 trucks · renews next month · ready to buy</span></div>
+          <div class="lv-booked" id="lv-booked">
+            <div class="lv-ck"><svg width="14" height="14" viewBox="0 0 14 14"><path d="m2 7 3.2 3L12 3.5" fill="none" stroke="#0B121D" stroke-width="2.2"/></svg></div>
+            <div><small data-es="Agendado en tu calendario">Booked on your calendar</small><strong data-es="Mike R. · Jue 10:00 AM">Mike R. · Thu 10:00 AM</strong><span class="lv-bk-note" data-es="2 camiones · vence el próximo mes · listo para comprar">2 trucks · renews next month · ready to buy</span></div>
           </div>
         </div>
       </div>
-      <div class="chip c1"><span>●</span> <b data-es="Respuesta en español o inglés">Replies in English or Spanish</b></div>
-      <div class="chip c2"><span>✓</span> <b data-es="Nota lista antes de tu llamada">Call note ready for you</b></div>
+      <div class="lv-chips">
+        <div class="lv-chip c1"><span>●</span> <b data-es="Respuesta en español o inglés">Replies in English or Spanish</b></div>
+        <div class="lv-chip c3"><span class="rigo-av"></span> <b data-es="Rigo escribe por ti, 24/7">Rigo texts for you, 24/7</b></div>
+        <div class="lv-chip c2"><span>✓</span> <b data-es="Nota lista antes de tu llamada">Call note ready for you</b></div>
+      </div>
     </div>
+
   </div>
 </header>
 
-<div class="strip">
+<section class="vs">
   <div class="wrap">
-    <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#F26B1D" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#F26B1D" stroke-width="1.6"/></svg><span data-es="Tú apruebas cada mensaje antes de que salga">You approve every message before it goes out</span></div>
-    <div><svg width="18" height="18" viewBox="0 0 18 18"><rect x="3" y="8" width="12" height="8" rx="2" fill="none" stroke="#F26B1D" stroke-width="1.6"/><path d="M6 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="#F26B1D" stroke-width="1.6"/></svg><span data-es="Tu lista es privada y se borra al terminar">Your list stays private and is deleted after</span></div>
-    <div><svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 4h12M3 9h8M3 14h10" stroke="#F26B1D" stroke-width="1.6" fill="none"/></svg><span data-es="Español e inglés, de forma natural">English and Spanish, naturally</span></div>
-    <div><svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2v14M5 6c0-2 8-2 8 0s-8 2-8 4 8 2 8 0" stroke="#F26B1D" stroke-width="1.6" fill="none"/></svg><span data-es="Cada póliza y comisión es 100% tuya">Every policy and commission is 100% yours</span></div>
+    <p class="vs-line rv" data-es="Las herramientas masivas le escriben a miles de desconocidos. <b>Rigo le habla a tus clientes como lo haría tu mejor agente.</b>">Blast tools text thousands of strangers. <b>Rigo talks to your clients the way your best agent would.</b></p>
+    <ul class="vs-pts rv">
+      <li data-es="<b>Solo con permiso.</b> Gente que le pidió cotización a tu agencia. Nunca listas en frío."><b>Only with permission.</b> People who asked your agency for a quote. Never cold lists.</li>
+      <li data-es="<b>Con el trato de tu agencia.</b> Amable, respetuoso y profesional, con tu voz. Atiende a cada cliente como tú quieres que lo atiendan."><b>Your agency's standard.</b> Warm, respectful and professional, in your voice. Every client treated the way you want them treated.</li>
+      <li data-es="<b>Se acuerda de todo.</b> Cada camión, cada detalle. Retoma la plática donde se quedó, aunque pasen meses."><b>Remembers everything.</b> Every truck, every detail. Picks up right where it left off, even months later.</li>
+    </ul>
   </div>
-</div>
+</section>
+
+<section class="trysec" id="try">
+  <div class="wrap">
+    <div class="try-card">
+      <div class="try-head">
+        <div class="rigo-av"></div>
+        <div>
+          <div class="eyebrow" data-es="¿Quieres verlo por tu cuenta?">Want to see it for yourself?</div>
+          <h3 data-es="Escríbele a Rigo <em>como un camionero.</em>">Text Rigo <em>like a trucker would.</em></h3>
+          <p data-es="Tú eres Mike. Rigo te escribe como Alex, el agente, y se acuerda de todo.">You're Mike. Rigo texts you as Alex, the agent, and remembers everything.</p>
+        </div>
+      </div>
+      <button class="btn btn-go" type="button" id="openTry" aria-expanded="false" aria-controls="tryBody" data-es="Pruébalo tú →">Try it yourself →</button>
+    </div>
+    <div class="try-body" id="tryBody" hidden>
+      <ul class="try-list">
+        <li data-es="Pregúntale quién es, o si es un bot">Ask who it is, or if it's a bot</li>
+        <li data-es="Pregúntale cuánto cuesta">Ask what it costs</li>
+        <li data-es="Contéstale en español">Answer in Spanish</li>
+        <li data-es="O dile “stop”">Or tell it “stop”</li>
+      </ul>
+    <div class="demo">
+      <div class="halo"></div>
+      
+      <div class="phone">
+        <div class="screen">
+          <div class="chead"><div class="cav">A</div><div><div class="cname">Alex · Ridgeline Insurance</div><div class="cmeta"><span class="rigo-av"></span><span class="cm-t" data-es="con Rigo">powered by Rigo</span></div></div></div>
+          <div class="feed" id="feed" aria-live="polite"></div>
+          <form class="composer nudge" id="composer" autocomplete="off"><input id="msg" type="text" enterkeyhint="send" maxlength="160" aria-label="Text Rigo" placeholder="Text Rigo…"><button type="submit" id="send" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></form>
+        </div>
+      </div>
+      <div class="demo-ctl"><button class="replay" type="button" id="replay"><i></i><span data-es="Ver una conversación">Watch a replay</span></button><button class="restart" type="button" id="restart" data-es="Empezar de nuevo">Start over</button></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof" id="proof">
+  <div class="wrap">
+    <div class="eyebrow rv" data-es="Resultados">Proof</div>
+    <h2 class="rv" data-es="Ya lo hemos hecho <em>antes.</em>">We've done this <em>before.</em></h2>
+    <p class="lede rv" data-es="Rigo trabaja con el mismo sistema que nuestro equipo ya usó para hacer crecer otros negocios.">Rigo runs on the same playbook our team has used to grow other businesses.</p>
+
+    <div class="stat rv"><div class="num"><span class="count" data-to="60">60</span></div>
+      <div><p data-es="Llamadas agendadas en 2 semanas, de 300+ leads viejos a los que ya les habían llamado hasta el cansancio.">Calls booked in 2 weeks, from 300+ old leads that had been called to death.</p>
+      <div class="fix"><div class="rigo-av"></div><span data-es="Eso es lo que hay escondido en tus cotizaciones viejas.">That's what's sitting in your old quotes.</span></div></div></div>
+
+    <div class="stat rv"><div class="num"><span class="count" data-to="3">3</span>×</div>
+      <div><p data-es="Más ventas en la mitad del tiempo: de $1M a $3M. Una meta de 12 meses, lograda en 6.">The sales, in half the time: $1M to $3M. A 12-month goal, done in 6.</p>
+      <div class="fix"><div class="rigo-av"></div><span data-es="Contesta rápido, da seguimiento siempre, agenda solo a los listos.">Answer fast, always follow up, book only the ready ones.</span></div></div></div>
+
+    <div class="stat rv"><div class="num"><span class="count" data-to="25">25</span><small data-es="/día">/day</small></div>
+      <div><p data-es="Llamadas agendadas al día. Tantas, que el cliente nos pidió bajarle a 15 porque su equipo no se daba abasto.">Calls booked a day. So many, the client asked us to slow it down to 15. Their team couldn't keep up.</p>
+      <div class="fix"><div class="rigo-av"></div><span data-es="Un buen problema: más camioneros listos de los que puedes atender.">A good problem: more ready buyers than you can call.</span></div></div></div>
+
+    <p class="src" data-es="Resultados de clientes anteriores de nuestro equipo, en otras industrias. Cada agencia es diferente.">Results from past clients of our team, in other industries. Every agency is different.</p>
+    <div class="sec-cta rv"><a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero estos resultados →">I want results like these →</a><span data-es="$0 por adelantado · primeras 3 llamadas gratis">$0 upfront · first 3 calls free</span></div>
+  </div>
+</section>
+
+<section class="jobs" id="jobs">
+  <div class="wrap">
+    <div class="jobs-head">
+      <div class="eyebrow" data-es="El trabajo de Rigo">Rigo's job</div>
+      <h2 style="margin-top:16px" data-es="Tres trabajos que tu equipo <em>no tiene tiempo de hacer.</em>">Three jobs your team <em>never has time for.</em></h2>
+      <p data-es="Tú haces una cosa pequeña. Rigo te entrega el resultado.">You do one small thing. Rigo hands you the result.</p>
+    </div>
+
+    <div class="job rv">
+      <div>
+        <div class="num" data-es="Trabajo 01">Job 01</div>
+        <h3 data-es="Contesta cada solicitud de cotización, a cualquier hora.">Answers every quote request, any hour.</h3>
+        <div class="do">
+          <div><b data-es="Tú">You</b><span data-es="Te llega una solicitud a las 9pm mientras cenas.">Get a quote request at 9pm while you're at dinner.</span></div>
+          <div><b>Rigo</b><span data-es="Le contesta en un minuto, a nombre de tu agencia, y hace las preguntas rápidas.">Texts back in a minute, in your agency's name, and asks the quick questions.</span></div>
+        </div>
+      </div>
+      <div class="job-vis">
+        <div class="tag-in"><span data-es="<b>●</b> Nueva solicitud · formulario web">● New request · website form</span><span>9:12 PM</span></div>
+        <div class="mini">
+          <div class="b rigo" data-es="¡Hola Luis! Gracias por pedir cotización con Ridgeline. ¿Cuántos camiones vamos a asegurar?">Hi Luis! Thanks for asking Ridgeline for a quote. How many trucks are we covering?</div>
+          <div class="sys" data-es="Rigo · respondió en 41 segundos">Rigo · replied in 41 seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="job rv">
+      <div>
+        <div class="num" data-es="Trabajo 02">Job 02</div>
+        <h3 data-es="Persigue cada cotización que se quedó en silencio.">Chases every quote that went quiet.</h3>
+        <div class="do">
+          <div><b data-es="Tú">You</b><span data-es="Le pasas a Rigo tu lista de &quot;lo voy a pensar&quot;.">Hand Rigo your "let me think about it" list.</span></div>
+          <div><b>Rigo</b><span data-es="Les da seguimiento por semanas, con paciencia, hasta que están listos o dicen que no.">Follows up for weeks, patiently, until they're ready or say no.</span></div>
+        </div>
+      </div>
+      <div class="job-vis">
+        <div class="tag-in"><span data-es="<b>●</b> Cotizó en agosto · nunca compró">● Quoted in August · never bought</span></div>
+        <div class="mini">
+          <div class="b rigo" data-es="Hola Mike, es Ridgeline Insurance. En agosto nos preguntaste por seguro para tu camión. ¿Todavía buscas?">Hi Mike, it's Ridgeline Insurance. You asked us about truck coverage back in August. Still looking?</div>
+          <div class="b me" data-es="Sí, ya son 2 camiones. Renuevo el próximo mes">Yeah, it's 2 trucks now. Renewal is next month</div>
+          <div class="sys" data-es="Rigo · de vuelta después de 3 meses">Rigo · back in play after 3 months</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="job rv">
+      <div>
+        <div class="num" data-es="Trabajo 03">Job 03</div>
+        <h3 data-es="Agenda a los listos, con su información lista.">Books the ready ones, with their file ready.</h3>
+        <div class="do">
+          <div><b data-es="Tú">You</b><span data-es="Abres tu calendario.">Open your calendar.</span></div>
+          <div><b>Rigo</b><span data-es="Ya agendó la llamada, con camiones, carga, cuándo necesita cobertura y la conversación completa.">Already booked the call, with trucks, cargo, when they need coverage and the full text thread.</span></div>
+        </div>
+      </div>
+      <div class="job-vis">
+        <div class="cal">
+          <div class="slot"><time>9:00</time><div data-es="Llamada de equipo">Team call</div></div>
+          <div class="slot on"><time>10:00</time><div><b data-es="Mike R. · agendado por Rigo">Mike R. · booked by Rigo</b><small data-es="2 camiones · dry van · renueva el próximo mes">2 trucks · dry van · renewal next month</small></div></div>
+          <div class="slot on"><time>11:30</time><div><b data-es="Luis G. · agendado por Rigo">Luis G. · booked by Rigo</b><small data-es="1 camión · reefer · necesita cobertura esta semana">1 truck · reefer · needs coverage this week</small></div></div>
+          <div class="slot"><time>2:00</time><div data-es="Libre">Open</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-cta rv"><a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Pon a Rigo con tus cotizaciones viejas →">Put Rigo on your old quotes →</a><span data-es="Listo en una semana aprox.">Live in about a week</span></div>
+  </div>
+</section>
 
 <section class="letter">
   <div class="wrap">
     <div class="eyebrow" data-es="Una nota rápida para el dueño de la agencia">A quick note to the agency owner</div>
-    <p class="scroll-words" id="words" data-es="Ahora mismo, en tus archivos, hay una lista de camioneros que te pidieron cotización, dijeron <span class=&quot;hot&quot;>“lo voy a pensar”</span>… y nunca volvieron a saber de ti. No porque no te importaran. Solo estabas ocupado. Ellos todavía necesitan seguro. Alguien se los va a vender. <span class=&quot;hot&quot;>Debería ser tu agencia.</span>">Right now, somewhere in your files, there's a list of truckers who asked you for a quote, said <span class="hot">“let me think about it”</span>… and never heard from you again. Not because you didn't care. You just got busy. They still need insurance. Someone is going to sell it to them. <span class="hot">It should be you.</span></p>
-    <p class="sig" data-es="Eso es todo lo que hacemos: volvemos por esos clientes, de tu parte, y solo te pasamos a los que están listos.">That's all we do. We go back for those clients, in your agency's name, and only hand you the ones who are ready.</p>
+    <p class="scroll-words" id="words" data-es="Ahora mismo, en tus archivos, hay camioneros que te pidieron cotización, dijeron <span class=&quot;hot&quot;>“lo voy a pensar”</span>… y nunca volvieron a saber de ti. No porque no te importaran. Solo estabas ocupado. Ellos todavía necesitan seguro. Alguien se los va a vender. <span class=&quot;hot&quot;>Rigo se asegura de que seas tú.</span>">Right now, somewhere in your files, there are truckers who asked you for a quote, said <span class="hot">“let me think about it”</span>… and never heard from you again. Not because you didn't care. You just got busy. They still need insurance. Someone is going to sell it to them. <span class="hot">Rigo makes sure it's you.</span></p>
+    <div class="sec-cta rv"><a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Asegúrate de que seas tú →">Make sure it's you →</a><span data-es="$0 por adelantado · primeras 3 llamadas gratis">$0 upfront · first 3 calls free</span></div>
   </div>
 </section>
+
+<section class="ctrl">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-es="Tú tienes el control">You're in control</div>
+      <h2 style="margin-top:16px" data-es="Tus clientes. Tu voz. <em>Tus reglas.</em>">Your clients. Your voice. <em>Your rules.</em></h2>
+      <div class="ctrl-list">
+        <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#3DD68C" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#3DD68C" stroke-width="1.6"/></svg><span data-es="Rigo escribe a nombre de tu agencia, con tu tono.">Rigo writes in your agency's name, in your tone.</span></div>
+        <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#3DD68C" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#3DD68C" stroke-width="1.6"/></svg><span data-es="Tú apruebas los mensajes antes de empezar.">You approve the messages before anything goes out.</span></div>
+        <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#3DD68C" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#3DD68C" stroke-width="1.6"/></svg><span data-es="Las preguntas que Rigo no puede contestar pasan a tu equipo con el contexto.">Questions Rigo can't answer go to your team, with context.</span></div>
+        <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#3DD68C" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#3DD68C" stroke-width="1.6"/></svg><span data-es="Rigo deja de escribir en cuanto alguien dice que no.">Rigo stops the moment someone says stop.</span></div>
+        <div><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#3DD68C" stroke-width="1.6"/><path d="m5.5 9 2.3 2.2 4.7-4.7" fill="none" stroke="#3DD68C" stroke-width="1.6"/></svg><span data-es="Tu lista solo se usa para ti y se borra al terminar.">Your list is only used for you, and deleted when you're done.</span></div>
+      </div>
+    </div>
+    <div class="not">
+      <h3 data-es="Lo que Rigo nunca hace">What Rigo never does</h3>
+      <ul>
+        <li data-es="Llamar en frío a nadie">Cold-call anyone</li>
+        <li data-es="Vender o comprar leads">Sell or buy leads</li>
+        <li data-es="Dar precios o cotizar">Give prices or quotes</li>
+        <li data-es="Escribirle a alguien que no te pidió cotización">Text anyone who didn't ask you for a quote</li>
+      </ul>
+      <p data-es="Rigo abre la conversación. Tu equipo cotiza y cierra.">Rigo opens the conversation. Your team quotes and closes.</p>
+    </div>
+    <div class="sec-cta rv"><a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Prueba a Rigo con tus cotizaciones →">Try Rigo on your quotes →</a><span data-es="Tú apruebas cada mensaje primero">You approve every message first</span></div>
+  </div>
+</section>
+
 
 <section class="how" id="how">
   <div class="wrap">
-    <div class="how-head">
-      <h2 data-es="Tres pasos.<br>Solo uno es tuyo.">Three steps.<br>Only one is yours.</h2>
-      <p data-es="Sin cambiar tus sistemas. Empiezas con una hoja de cálculo y nosotros hacemos el resto.">No new software to learn. You start with a simple spreadsheet and we do the rest.</p>
-    </div>
-    <div class="steps">
-      <article class="step rv">
-        <div class="n" aria-hidden="true">01</div>
-        <h3 data-es="Nos pasas la lista">Send the list</h3>
-        <p data-es="Tu hoja de cálculo con 50 personas que cotizaste y no compraron: nombre, teléfono y email.">Your spreadsheet of 50 people you quoted who never bought: name, phone and email.</p>
-        <span class="who you" data-es="Tu parte · unos minutos">Your part · a few minutes</span>
-      </article>
-      <article class="step rv">
-        <div class="n" aria-hidden="true">02</div>
-        <h3 data-es="Les volvemos a escribir">We reach back out</h3>
-        <p data-es="Textos y emails a nombre de tu agencia, en su idioma. Contestamos cada respuesta y vemos quién sí califica y está listo.">Texts and emails in your agency's name, in their language. We handle every reply and find out who qualifies and is ready.</p>
-        <span class="who" data-es="Nuestra parte">Our part</span>
-      </article>
-      <article class="step rv">
-        <div class="n" aria-hidden="true">03</div>
-        <h3 data-es="Compradores en tu calendario">Buyers on your calendar</h3>
-        <p data-es="Los listos llegan a tu calendario con una nota corta: quién es, qué necesita y cuándo se le vence la póliza. Tú solo cierras.">Ready buyers land on your calendar with a short note: who they are, what they need, when their policy renews. You just close.</p>
-        <span class="who" data-es="Nuestra parte">Our part</span>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="team">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow" data-es="Lo que realmente recibes">What you really get</div>
-      <h2 style="margin-top:18px" data-es="Un equipo de seguimiento. <em>Sin contratar a nadie.</em>">A follow-up team. <em>Without the payroll.</em></h2>
-      <p class="sub" data-es="Hoy el seguimiento vive en notas, en tu cabeza y en el celular de tu agente. Por ahí se escapan las ventas. Nosotros llevamos el control de cada cotización hasta que dice sí o no.">Right now your follow-up lives in sticky notes, in your head and on your agent's phone. That's where sales slip away. We track every quote until it says yes or no.</p>
-      <div class="hours"><b data-es="Horas">Hours</b><span data-es="de trabajo manual que tu equipo recupera cada semana para vender.">of manual work your team gets back every week, to spend selling.</span></div>
-    </div>
-    <div class="team-list">
-      <div class="team-item rv"><div class="ico">01</div><div><h3 data-es="Ninguna cotización se queda olvidada">No quote slips through</h3><p data-es="Cada persona que cotizaste queda en seguimiento hasta tener una respuesta. Nada se pierde entre el trabajo del día.">Every person you quoted stays in follow-up until there's an answer. Nothing gets lost in a busy day.</p></div></div>
-      <div class="team-item rv"><div class="ico">02</div><div><h3 data-es="Nosotros escribimos, contestamos e insistimos">We write, answer and follow up</h3><p data-es="Los textos, los emails y el &quot;escríbeme la próxima semana&quot;. Todo ese trabajo lo hacemos nosotros.">The texts, the emails, the "text me next week." All that work is on us.</p></div></div>
-      <div class="team-item rv"><div class="ico">03</div><div><h3 data-es="Sabes quién está listo y quién no">You know who's hot and who's not</h3><p data-es="Ves en qué va cada cliente: listo para comprar, más adelante o no le interesa. Sin adivinar.">See where every client stands: ready to buy, later, or not interested. No guessing.</p></div></div>
-      <div class="team-item rv"><div class="ico">04</div><div><h3 data-es="Tú solo cierras">You just close</h3><p data-es="A tu calendario solo llega la gente lista, con una nota de lo que necesita. Tu tiempo va a ventas, no a perseguir.">Only ready buyers reach your calendar, with a note on what they need. Your time goes to selling, not chasing.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="math">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow" data-es="Haz la cuenta">Do the math</div>
-      <h2 style="margin-top:18px" data-es="Si solo regresan <em>3 de 50</em>, ya ganaste.">If just <em>3 of 50</em> come back, you already won.</h2>
-      <p class="sub" data-es="Mueve los números con los de tu agencia. Es dinero que ya pagaste por conseguir, sentado en una lista.">Move the numbers to match your agency. This is money you already paid to get, sitting in a list.</p>
-    </div>
-    <div class="calc">
-      <div class="field"><label for="q"><span data-es="Cotizaciones viejas que no cerraron">Old quotes that didn't close</span><output id="qo">200</output></label><input type="range" id="q" min="50" max="2000" step="50" value="200"></div>
-      <div class="field"><label for="r"><span data-es="Cuántas regresan (de cada 100)">How many come back (per 100)</span><output id="ro">6</output></label><input type="range" id="r" min="1" max="15" step="1" value="6"></div>
-      <div class="field"><label for="c"><span data-es="Tu comisión por póliza al año">Your commission per policy, per year</span><output id="co">$1,500</output></label><input type="range" id="c" min="500" max="5000" step="100" value="1500"></div>
-      <div class="result">
-        <div><small data-es="Pólizas recuperadas">Policies won back</small><div class="policies" id="pol">12</div></div>
-        <div style="text-align:right"><small data-es="Comisión estimada al año">Estimated commission / year</small><div class="big" id="tot">$18,000</div></div>
-      </div>
-      <p class="note" data-es="Ejemplo para calcular, no una promesa. Los resultados dependen de tus cotizaciones.">An example to calculate with, not a promise. Results depend on your quotes.</p>
-    </div>
-  </div>
-</section>
-
-<section class="night">
-  <div class="wrap">
-    <div>
-      <div class="eyebrow" data-es="Y para las cotizaciones nuevas">And for new quote requests</div>
-      <div class="clock" aria-label="9:12 PM">9<span>:</span>12<small style="font-size:.3em;letter-spacing:0"> PM</small></div>
-      <p class="big-p" data-es="Estás cenando con tu familia. Un camionero termina su ruta y pide cotización. <b>No tienes que tomar el teléfono.</b>">You're at dinner with your family. A trucker finishes his route and asks for a quote. <b>You don't have to pick up your phone.</b></p>
-      <span class="tag" data-es="Incluido en los planes de pago · no en la prueba gratis">Included in the paid plans · not in the free test</span>
-    </div>
-    <div class="timeline">
-      <div class="tl rv"><time>9:12 PM</time><div data-es="Llega la solicitud por tu página, email o redes.">The request comes in from your website, email or social media.</div></div>
-      <div class="tl rv"><time>9:12 PM</time><div data-es="Le contestamos en menos de un minuto, en español o inglés.">We answer in under a minute, in English or Spanish.</div></div>
-      <div class="tl rv"><time>9:15 PM</time><div data-es="Vemos si califica: número de DOT, camiones, carga y cuándo vence su póliza.">We check if they qualify: DOT number, trucks, cargo, renewal date.</div></div>
-      <div class="tl rv"><time>9:17 PM</time><div data-es="Queda agendado para el día siguiente. Tú despiertas con la llamada y la nota lista.">Booked for the next day. You wake up to the call and the note, ready.</div></div>
-    </div>
+    <div class="eyebrow" data-es="Cómo empieza">How it starts</div>
+    <h2 style="margin-top:16px" data-es="Tu parte toma minutos. <em>La nuestra, el resto.</em>">Your part takes minutes. <em>We do the rest.</em></h2>
+    <ol class="steps">
+      <li class="rv"><span class="when" data-es="Hoy">Today</span><b data-es="Mándanos tus cotizaciones">Send us your quotes</b><p data-es="Un formulario corto y una hoja de cálculo con nombre y teléfono. Sirve de cualquier sistema. Nada nuevo que instalar.">A short form and a spreadsheet with names and phones. From any system. Nothing new to install.</p></li>
+      <li class="rv"><span class="when" data-es="Esta semana">This week</span><b data-es="Tú apruebas los mensajes">You approve the messages</b><p data-es="Escribimos los mensajes de Rigo con tu voz, en inglés y español. Nada sale sin tu OK.">We write Rigo's messages in your voice, in English and Spanish. Nothing goes out without your OK.</p></li>
+      <li class="rv"><span class="when" data-es="En una semana aprox.">In about a week</span><b data-es="Llamadas en tu calendario">Calls land on your calendar</b><p data-es="Rigo empieza a escribir. Los que están listos llegan agendados, con su ficha.">Rigo starts texting. The ready ones get booked, with their call file.</p></li>
+    </ol>
+    <div class="sec-cta rv"><a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Empezar el paso 1 →">Start step 1 →</a><span data-es="Toma unos minutos">Takes a few minutes</span></div>
   </div>
 </section>
 
 <section class="offer" id="offer">
   <div class="wrap">
-    <div class="eyebrow" data-es="Cómo trabajamos">How we work together</div>
-    <h2 style="margin-top:18px" data-es="Primero te demostramos que funciona. Luego decides.">First we prove it works. Then you decide.</h2>
+    <div class="eyebrow" data-es="Contrata a Rigo">Hire Rigo</div>
+    <h2 style="margin-top:16px" data-es="$0 por adelantado. <em>Pagas solo cuando hay llamada.</em>">$0 upfront. <em>Pay only when a call lands.</em></h2>
+    <p class="offer-sub" data-es="Solo pagas cuando un camionero listo queda agendado en tu calendario. Tus primeras 3 llamadas agendadas van por nuestra cuenta.">You only pay when a ready trucker is booked on your calendar. Your first 3 booked calls are on us.</p>
+    <p class="fit" data-es="Hecho para agencias con 2+ años, 100+ clientes y un equipo que da seguimiento y cierra.">Built for agencies with 2+ years in business, 100+ clients, and a team that follows up and closes.</p>
     <div class="offer-grid">
       <article class="card free">
         <div class="label" data-es="Empieza aquí">Start here</div>
-        <h3 style="font-size:26px" data-es="Prueba gratis">Free test</h3>
-        <div class="price">$0 <small data-es="· 50 cotizaciones viejas">· 50 old quotes</small></div>
-        <ul>
-          <li data-es="Mensajes con la voz de tu agencia, aprobados por ti">Messages in your agency's voice, approved by you</li>
-          <li data-es="Atendemos cada respuesta">Every reply handled for you</li>
-          <li data-es="Compradores listos en tu calendario, con nota">Ready buyers on your calendar, with a note</li>
-          <li data-es="Lista en una semana aprox.">Live in about a week</li>
-          <li data-es="Si nadie agenda, no perdiste nada">If nobody books, you lost nothing</li>
-        </ul>
-        <a class="btn js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero mi prueba gratis →">Claim my free test →</a>
+        <h3 style="font-size:22px" data-es="Pago por llamada">Pay per call</h3>
+        <div class="price">$67 <small data-es="/ llamada agendada">/ booked call</small></div>
+        <p data-es="Sin mensualidad. Tus primeras 3 llamadas agendadas son gratis.">No monthly fee. Your first 3 booked calls are free.</p>
+        <a class="btn js-form" href="https://tally.so/r/Npekab?plan=per-call" target="_blank" rel="noopener" data-plan="per-call" data-es="Probar a Rigo →">Try Rigo →</a>
       </article>
       <article class="card">
-        <div class="label" style="color:var(--fog)" data-es="Después · pagas por resultado">After · pay for results</div>
-        <h3 style="font-size:24px" data-es="Por cliente recuperado">Per client won back</h3>
-        <div class="price">$80 <small data-es="/ cliente">/ client</small></div>
-        <p class="muted" data-es="Solo pagas cuando regresa un cliente. Ideal para empezar.">You only pay when a client comes back. Simple way to keep going.</p>
-        <ul class="muted">
-          <li data-es="Reactivación de cotizaciones viejas">Old-quote reactivation</li>
-          <li data-es="Respuesta inmediata a cotizaciones nuevas">Instant reply to new quote requests</li>
-        </ul>
+        <div class="label" style="color:var(--fog)" data-es="Crecimiento">Growth</div>
+        <div class="price">$1,500 <small data-es="/ mes">/ mo</small></div>
+        <p data-es="Hasta 50 llamadas agendadas al mes.">Up to 50 booked calls a month.</p>
+        <div class="per" data-es="$30 por llamada · ahorras 55%">$30 per call · save 55%</div>
+        <a class="btn btn-ghost card-cta js-form" data-plan="growth" href="https://tally.so/r/Npekab?plan=growth" target="_blank" rel="noopener" data-es="Elegir Growth →">Choose Growth →</a>
       </article>
       <article class="card">
-        <div class="label" style="color:var(--fog)" data-es="Después · mucho volumen">After · high volume</div>
-        <h3 style="font-size:24px" data-es="Mensual">Monthly</h3>
-        <div class="price">$1,500 <small data-es="/ mes">/ month</small></div>
-        <p class="muted" data-es="Para agencias con muchas cotizaciones cada mes. Un precio fijo.">For agencies with a lot of quotes every month. One flat price.</p>
-        <ul class="muted">
-          <li data-es="Reactivación de cotizaciones viejas">Old-quote reactivation</li>
-          <li data-es="Respuesta inmediata a cotizaciones nuevas">Instant reply to new quote requests</li>
-        </ul>
+        <div class="label" style="color:var(--fog)" data-es="Escala">Scale</div>
+        <div class="price">$5,000 <small data-es="/ mes">/ mo</small></div>
+        <p data-es="Hasta 200 llamadas agendadas al mes.">Up to 200 booked calls a month.</p>
+        <div class="per" data-es="$25 por llamada · ahorras 63%">$25 per call · save 63%</div>
+        <a class="btn btn-ghost card-cta js-form" data-plan="scale" href="https://tally.so/r/Npekab?plan=scale" target="_blank" rel="noopener" data-es="Elegir Scale →">Choose Scale →</a>
+      </article>
+      <article class="card">
+        <div class="label" style="color:var(--fog)">Enterprise</div>
+        <div class="price" data-es="A medida">Custom</div>
+        <p data-es="Más de 200 llamadas al mes, con el sistema completo de captación hecho para tu agencia.">200+ booked calls a month, with a full lead-capture system built for your agency.</p>
+        <a class="btn btn-ghost card-cta" href="mailto:info@fast-freight-ai.com?subject=Rigo%20Enterprise" data-es="Hablemos →">Let's talk →</a>
       </article>
     </div>
-    <div class="enterprise"><span data-es="<b>¿Más de 50 llamadas al mes?</b> Plan Enterprise desde $5,000/mes, hasta 200 llamadas agendadas.">✦ <b>More than 50 calls a month?</b> Enterprise from $5,000/month, up to 200 booked calls.</span><span class="sel">info@fast-freight-ai.com</span></div>
+    <div class="incl rv">
+      <h3 data-es="Incluido en todos los planes">Included in every plan</h3>
+      <ul>
+        <li data-es="Rigo configurado a nombre de tu agencia, en inglés y español">Rigo set up in your agency's name, in English and Spanish</li>
+        <li data-es="Mensajes con tu voz. Tú los apruebas primero.">Messages written in your voice. You approve them first.</li>
+        <li data-es="Respuesta inmediata a cada solicitud de cotización, 24/7">Instant replies to every new quote request, 24/7</li>
+        <li data-es="Seguimiento a cada cotización hasta un sí o un no">Follow-up on every quote until it's a yes or a no</li>
+        <li data-es="Rigo recuerda a cada camionero y cada detalle, aunque pasen meses">Rigo remembers every trucker and every detail, even months later</li>
+        <li data-es="Llamadas en tu calendario con resumen del lead y la conversación completa">Calls on your calendar with a lead summary and the full text thread</li>
+        <li data-es="Recordatorios antes de cada llamada. ¿No llegó? Rigo lo vuelve a agendar, y pagas una sola vez por camionero.">Reminders before every call. No-show? Rigo rebooks them, and you pay once per trucker.</li>
+        <li data-es="Solo le escribe a quien te pidió cotización, y se detiene en cuanto dicen que no">Only texts people who asked you for a quote, and stops the moment they say stop</li>
+      </ul>
+    </div>
+    <p class="offer-note" data-es="Llamadas extra: $30 cada una en Growth, $25 en Scale. Solo abrimos 3 agencias nuevas al mes, para darle a cada una toda nuestra atención.">Extra calls: $30 each on Growth, $25 on Scale. We only open 3 new agencies a month, so each one gets our full attention.</p>
   </div>
 </section>
 
@@ -449,15 +701,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   <div class="wrap">
     <div>
       <div class="eyebrow" data-es="Preguntas">Questions</div>
-      <h2 style="margin-top:18px" data-es="Lo que todo dueño pregunta primero.">What every owner asks first.</h2>
+      <h2 style="margin-top:16px" data-es="Lo que todo dueño pregunta primero.">What every owner asks first.</h2>
     </div>
     <div>
-      <details open><summary data-es="¿Le van a escribir a mis clientes sin que yo lo vea?">Will you message my clients without me seeing it?</summary><p data-es="No. Antes de empezar, tú revisas y apruebas los mensajes. Suenan como tu agencia, no como un robot.">No. Before anything goes out, you review and approve the messages. They sound like your agency, not a robot.</p></details>
-      <details><summary data-es="¿Ustedes venden leads?">Do you sell leads?</summary><p data-es="No. No vendemos ni compramos leads. Trabajamos solo con tus propias cotizaciones: personas que ya te pidieron precio. Las traemos de vuelta y les damos seguimiento a todas, para que cierres con gente que ya conoce tu agencia.">No. We don't sell or buy leads. We only work with your own quotes, people who already asked you for a price. We bring them back and keep track of every one, so you close with people who already know your agency.</p></details>
-      <details><summary data-es="¿Qué pasa con mi lista?">What happens to my list?</summary><p data-es="Solo la usamos para tu campaña. Al terminar, la borramos de todos lados. Tus clientes siguen siendo tuyos.">We only use it for your campaign. When it's done, we delete it everywhere. Your clients stay yours.</p></details>
-      <details><summary data-es="¿Tengo que cambiar mis sistemas?">Do I have to change my systems?</summary><p data-es="No. Para empezar solo necesitamos una hoja de cálculo con nombre, teléfono y email.">No. To start, we only need a spreadsheet with names, phones and emails.</p></details>
-      <details><summary data-es="¿A quién le escriben?">Who do you contact?</summary><p data-es="Solo a tus propios clientes: personas que ya te pidieron cotización y te dieron su información para que les dieras seguimiento.">Only your own leads: people who already asked you for a quote and shared their info so you could follow up.</p></details>
-      <details><summary data-es="¿Cuál es el truco de la prueba gratis?">What's the catch with the free test?</summary><p data-es="Ninguno. Somos nuevos en seguros de camiones y preferimos demostrarlo con resultados antes de cobrarte un centavo.">There isn't one. We're new in trucking insurance, so we'd rather prove it with results before you pay a cent.</p></details>
+      <details open><summary data-es="¿Rigo es inteligencia artificial?">Is Rigo AI?</summary><p data-es="Sí. Rigo es un compañero de equipo con IA que escribe por texto a nombre de tu agencia, en español e inglés. Tu equipo hace las llamadas, cotiza y cierra.">Yes. Rigo is an AI teammate who texts in your agency's name, in English and Spanish. Your team takes the calls, quotes and closes.</p></details>
+      <details><summary data-es="¿Rigo le llama a mis clientes?">Does Rigo call my clients?</summary><p data-es="No. Rigo escribe por mensaje de texto. Cuando la persona está lista, la agenda para una llamada contigo o con tu equipo.">No. Rigo texts. When someone is ready, Rigo books them for a call with you or your team.</p></details>
+      <details><summary data-es="¿Ustedes venden leads?">Do you sell leads?</summary><p data-es="No. Rigo solo trabaja con tus propios clientes: gente que ya te pidió cotización.">No. Rigo only works with your own leads: people who already asked you for a quote.</p></details>
+      <details><summary data-es="¿Cuánto trabajo es para mí?">How much work is this for me?</summary><p data-es="Muy poco. Un formulario corto y una hoja de cálculo de cualquier sistema. Nosotros configuramos todo y escribimos los mensajes. Tú solo los apruebas y tomas las llamadas.">Very little. A short form and a spreadsheet from any system. We set everything up and write the messages. You approve them and take the calls.</p></details>
+      <details><summary data-es="¿Mis clientes van a saber que es IA?">Will my clients know it's AI?</summary><p data-es="Si preguntan, Rigo dice la verdad. Y la llamada siempre es contigo o con tu equipo.">If they ask, Rigo tells the truth. And the call is always with you or your team.</p></details>
+      <details><summary data-es="¿Cuándo pago?">When do I pay?</summary><p data-es="Solo cuando un camionero queda agendado en tu calendario. Las primeras 3 llamadas son gratis. Después eliges: pago por llamada o un plan mensual.">Only when a trucker is booked on your calendar. Your first 3 calls are free. After that, you choose: pay per call or a monthly plan.</p></details>
+      <details><summary data-es="¿Cuál es el truco?">What's the catch?</summary><p data-es="Ninguno. Si Rigo no te agenda llamadas, no pagas. Así de simple.">There isn't one. If Rigo doesn't book you calls, you don't pay. Simple as that.</p></details>
     </div>
   </div>
 </section>
@@ -465,25 +718,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 <section class="note-sec">
   <div class="wrap">
     <div class="eyebrow" data-es="De la fundadora">From the founder</div>
-    <p data-es="Pasé años en ventas con los mejores números y haciendo marketing para empresas de nueve cifras. Algo que aprendí: la mayoría de las ventas no se pierden por precio. Se pierden porque nadie volvió a llamar.">I spent years in sales with top numbers, and doing marketing for nine-figure companies. One thing I learned: most sales aren't lost on price. They're lost because nobody called back.</p>
-    <p data-es="Las agencias de seguros de camiones trabajan duro por cada cotización. Mi equipo y yo construimos Fast Freight AI para que ninguna se quede olvidada en una lista.">Trucking insurance agencies work hard for every quote. My team and I built Fast Freight AI so none of them get forgotten in a list.</p>
-    <p class="ps" data-es="<b>P.D.</b> Este mes solo tomamos 3 agencias para la prueba gratis, para darle a cada una atención completa.">“<b>P.S.</b> We only take 3 agencies for the free test this month, so each one gets our full attention.”</p>
+    <p data-es="Pasé años en ventas con los mejores números. Algo que aprendí: la mayoría de las ventas no se pierden por precio. Se pierden porque nadie volvió a llamar.">I spent years in sales with top numbers. One thing I learned: most sales aren't lost on price. They're lost because nobody followed up.</p>
+    <p data-es="Las agencias de seguros de camiones trabajan duro por cada cotización. Por eso mi equipo y yo creamos a Rigo: para que ninguna se quede olvidada.">Truck insurance agencies work hard for every quote. So my team and I built Rigo, to make sure none of them get forgotten.</p>
     <div class="name">Adriana</div>
     <div class="role" data-es="Fundadora · Fast Freight AI">Founder · Fast Freight AI</div>
+    <p class="direct" data-es="¿Preguntas? Escríbeme directo: <a href=&quot;mailto:info@fast-freight-ai.com&quot;>info@fast-freight-ai.com</a>. Te contesto yo.">Questions? Write me directly at <a href="mailto:info@fast-freight-ai.com">info@fast-freight-ai.com</a>. I answer personally.</p>
   </div>
 </section>
 
 <section class="final">
   <div class="wrap">
-    <h2 data-es="Tus clientes ya te pidieron cotización. Vamos por ellos.">Your clients already asked for a quote. Let's go get them.</h2>
-    <p data-es="Unos minutos hoy. Compradores listos en tu calendario muy pronto.">A few minutes today. Ready buyers on your calendar soon after.</p>
-    <div class="cta-row" style="margin-top:34px">
-      <a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Quiero mi prueba gratis →">Claim my free test →</a>
-    </div>
-    <div class="spots"><i></i><i class="o"></i><i class="o"></i> <span data-es="3 lugares para la prueba gratis este mes">3 free test spots this month</span></div>
+    <div class="carwrap" id="finalcar"><div class="rigo-av lg">R</div></div>
+    <div class="tagline" data-es="Rigo deja las luces prendidas. 24/7.">Rigo keeps the lights on. 24/7.</div>
+    <h2 data-es="Pon a Rigo <em>a trabajar.</em>">Put Rigo <em>to work.</em></h2>
+    <p data-es="Y empieza a convertir tus cotizaciones viejas en llamadas con camioneros listos para comprar.">And start turning old quotes into booked calls with truckers ready to buy.</p>
+    <div class="cta-row" style="margin-top:32px"><a class="btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Prueba a Rigo, $0 por adelantado →">Try Rigo, $0 upfront →</a></div>
+    <ul class="assure" style="justify-content:center"><li data-es="Primeras 3 llamadas gratis">First 3 calls free</li><li data-es="Tú apruebas cada mensaje">You approve every message</li><li data-es="Cada póliza es 100% tuya">Every policy is 100% yours</li></ul>
   </div>
 </section>
 
+<a class="stick btn btn-go js-form" href="https://tally.so/r/Npekab" target="_blank" rel="noopener" data-es="Pon a Rigo a trabajar →">Put Rigo to work →</a>
 <footer>
   <div class="wrap">
     <span>© 2026 Fast Freight AI · ThriveOn Solutions</span>
@@ -494,138 +748,359 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 <script>
 (function(){
   document.documentElement.classList.add('js');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FORMS = {en:'https://tally.so/r/Npekab', es:'https://tally.so/r/vGQk9d'};
+  var lang = 'en';
 
   /* ---------- language ---------- */
-  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-es]'));
+  var nodes = [].slice.call(document.querySelectorAll('[data-es]'));
   nodes.forEach(function(n){ n.setAttribute('data-en', n.innerHTML); });
   function setLang(l){
+    lang = l;
     nodes.forEach(function(n){ n.innerHTML = n.getAttribute(l==='es'?'data-es':'data-en'); });
-    document.querySelectorAll('.js-form').forEach(function(a){ a.href = FORMS[l]; });
+    document.querySelectorAll('.js-form').forEach(function(a){ a.href = FORMS[l] + (a.dataset.plan ? '?plan='+a.dataset.plan : ''); });
     document.documentElement.lang = l;
     document.getElementById('lang-en').setAttribute('aria-pressed', l==='en');
     document.getElementById('lang-es').setAttribute('aria-pressed', l==='es');
     try{ localStorage.setItem('ffai-lang', l); }catch(e){}
-    splitWords(); calc();
+    splitWords(); calc(); if(tryOpen) startDemo();
   }
   document.getElementById('lang-en').onclick = function(){ setLang('en'); };
   document.getElementById('lang-es').onclick = function(){ setLang('es'); };
 
+  /* ---------- live Rigo demo ---------- */
+  /* ---------- Rigo character: friendly face + trucker cap ---------- */
+  var RIGO='<svg viewBox="0 0 64 64" aria-hidden="true">'
+   +'<rect x="4" y="13" width="56" height="40" rx="14" fill="#1B2638" stroke="#3A4862" stroke-width="1.6"/>'
+   +'<g class="eyes"><circle class="lamp" cx="20" cy="30" r="10.5" fill="#FFD27A" opacity=".28"/><circle class="lamp" cx="44" cy="30" r="10.5" fill="#FFD27A" opacity=".28"/>'
+   +'<circle class="eye" cx="20" cy="30" r="7.2" fill="#FFF1C9"/><circle class="eye" cx="44" cy="30" r="7.2" fill="#FFF1C9"/>'
+   +'<path class="happy" d="M14 32q6-7 12 0M38 32q6-7 12 0" stroke="#FFF1C9" stroke-width="3.4" fill="none" stroke-linecap="round"/></g>'
+   +'<path d="M24 44.5h16" stroke="#F26B1D" stroke-width="3" stroke-linecap="round"/><path d="M27.5 49h9" stroke="#F26B1D" stroke-opacity=".5" stroke-width="2.4" stroke-linecap="round"/>'
+   +'<circle class="led" cx="56" cy="51" r="5" fill="#3DD68C" stroke="#fff" stroke-width="2"/></svg>';
+  document.querySelectorAll('.rigo-av').forEach(function(a){ a.innerHTML=RIGO; });
+  var eyesAll=[].slice.call(document.querySelectorAll('.rigo-av .eyes'));
+  addEventListener('pointermove',function(e){ if(reduce) return; eyesAll.forEach(function(g){
+    var r=g.closest('.rigo-av').getBoundingClientRect(), dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2), d=Math.hypot(dx,dy)||1, k=Math.min(1,d/300);
+    g.style.transform='translate('+(dx/d*2.2*k).toFixed(2)+'px,'+(dy/d*1.6*k).toFixed(2)+'px)'; }); },{passive:true});
+
+  /* ---------- live demo: Rigo texts AS the agent (Alex), and remembers ---------- */
+  var R = {
+    en:{
+      later:"November · 3 months later",
+      memoT:"Rigo remembers Mike", memo:"Quoted Aug 12 · 1 dry van · Fresno · renewal this fall · said “let me think about it”",
+      hi:"Hey Mike, it's Alex from Ridgeline Insurance. We talked in August about coverage for your dry van out of Fresno. Did you end up getting covered?",
+      hint:"Your turn. You're Mike. Reply anything: ask who this is, ask if it's a bot, or answer in Spanish.",
+      ph:["Text Alex…","Try: who's this?","Try: is this a bot?","Try: not yet, I have 3 trucks now","Try: hola, ¿quién eres?"],
+      who:"It's Alex, from Ridgeline Insurance. You asked me for a truck quote back in August.",
+      ai:"Good question! I'm Alex's AI teammate. I help him follow up so nobody falls through the cracks. Alex himself will be on the call.",
+      price:"Good question! It depends on your trucks and what you haul, so I'll give you the exact number on the call. That's why I'm asking.",
+      human:"Of course! I'll call you myself. Let me grab a couple of details so I'm ready.",
+      stop:"No problem, Mike. I won't text you again. If anything changes, just reply here.",
+      stopSys:"Rigo stops the moment someone says no.",
+      yes:"Nice! Still worth comparing before your renewal, a lot of truckers save.",
+      no:"No worries, that's why I'm reaching out.",
+      qCovered:"So, did you end up getting covered, or still looking?",
+      reWhen:"Got it. When do you need coverage to start?",
+      qTrucks:"Are you still running just the 1 truck, or did you grow since August?",
+      reTrucks:"How many trucks are you running now? Just a number works.",
+      qHaul:"Still hauling dry van?",
+      reHaul:"Got it. What are you hauling now?",
+      qWhen:"Last one: is your renewal still this fall, or do you need coverage sooner?",
+      qBookAsap:"On it! I can call you tomorrow. 10am or 2pm?",
+      qBook:"Can I call you Thursday? 10am or 2pm?",
+      reBook:"Which works better for you, 10am or 2pm?",
+      t1:"Got it, still the 1 truck.", tFew:"{n} trucks now? Nice, you're growing!", tMany:"{n} trucks, that's a real fleet now!",
+      hSame:"Perfect.", hAck:"{h}, got it.", hOther:"Got it, I'll note that.",
+      wAck:{asap:"",renew:"Perfect timing to compare.",shop:"Smart. I can show you options, no pressure.",other:"Got it."},
+      done:"You're all set for {d} at {t}. I'll have everything ready, so it'll be quick. Talk soon!",
+      after:"Got it. Talk soon, Mike!",
+      dAsap:"tomorrow", dLater:"Thursday", sAsap:"Tomorrow", sLater:"Thu",
+      wLabel:{asap:"ASAP",renew:"Renewal this fall",shop:"Shopping around"},
+      sys:"Booked on Alex's calendar", punch:"Rigo did this for Alex in under a minute. Alex spent 0 minutes on it.",
+      typing:"typing…", on:"powered by Rigo",
+      file:"Call file", ready:"● READY", rows:["Trucks","Hauls","Needs coverage","Language","History","Call"], langv:"English", hist:"Quoted Aug 12, re-engaged",
+      replay:["who's this?","oh hey. not yet, I have 3 trucks now","still dry van","renewal is still in the fall","10am works"]
+    },
+    es:{
+      later:"Noviembre · 3 meses después",
+      memoT:"Rigo recuerda a Mike", memo:"Cotizado el 12 de agosto · 1 dry van · Fresno · renueva en otoño · dijo “déjame pensarlo”",
+      hi:"¡Hola Mike! Soy Alex de Ridgeline Insurance. En agosto platicamos del seguro para tu dry van en Fresno. ¿Ya conseguiste seguro?",
+      hint:"Tu turno. Tú eres Mike. Contéstale lo que quieras: pregúntale quién es, si es un bot, o escríbele en inglés.",
+      ph:["Escríbele a Alex…","Prueba: ¿quién eres?","Prueba: ¿eres un bot?","Prueba: todavía no, ya tengo 3 camiones","Try: hi, who's this?"],
+      who:"Soy Alex, de Ridgeline Insurance. En agosto me pediste cotización para tu camión.",
+      ai:"¡Buena pregunta! Soy el compañero de equipo con IA de Alex. Le ayudo a dar seguimiento para que nadie se quede olvidado. En la llamada vas a hablar con Alex.",
+      price:"¡Buena pregunta! Depende de tus camiones y de lo que cargas, así que te doy el número exacto en la llamada. Para eso te pregunto.",
+      human:"¡Claro! Yo mismo te llamo. Déjame tomar un par de datos para estar listo.",
+      stop:"Sin problema, Mike. Ya no te vuelvo a escribir. Si algo cambia, contéstame aquí.",
+      stopSys:"Rigo se detiene en cuanto alguien dice que no.",
+      yes:"¡Qué bien! Aun así vale la pena comparar antes de renovar, muchos camioneros ahorran.",
+      no:"No te preocupes, para eso te escribo.",
+      qCovered:"Entonces, ¿ya conseguiste seguro o sigues buscando?",
+      reWhen:"Va. ¿Para cuándo necesitas que empiece la cobertura?",
+      qTrucks:"¿Sigues con 1 camión, o ya creciste desde agosto?",
+      reTrucks:"¿Cuántos camiones traes ahorita? Con el número basta.",
+      qHaul:"¿Sigues jalando dry van?",
+      reHaul:"Va. ¿Qué estás jalando ahora?",
+      qWhen:"Última: ¿sigues renovando en otoño, o necesitas la cobertura antes?",
+      qBookAsap:"¡Va! Te puedo llamar mañana. ¿10am o 2pm?",
+      qBook:"¿Te llamo el jueves? ¿10am o 2pm?",
+      reBook:"¿Qué hora te queda mejor, 10am o 2pm?",
+      t1:"Va, sigues con 1 camión.", tFew:"¿Ya {n} camiones? ¡Qué bien, vas creciendo!", tMany:"{n} camiones, ¡eso ya es una flotilla!",
+      hSame:"Perfecto.", hAck:"{h}, anotado.", hOther:"Anotado.",
+      wAck:{asap:"",renew:"Buen momento para comparar.",shop:"Muy bien. Te enseño opciones, sin presión.",other:"Anotado."},
+      done:"¡Listo! Quedaste {d} a las {t}. Voy a tener todo preparado, así que será rápido. ¡Hablamos pronto!",
+      after:"Va. Hablamos pronto, Mike.",
+      dAsap:"mañana", dLater:"el jueves", sAsap:"Mañana", sLater:"Jue",
+      wLabel:{asap:"Lo antes posible",renew:"Renueva en otoño",shop:"Comparando"},
+      sys:"Agendado en el calendario de Alex", punch:"Rigo hizo esto por Alex en menos de un minuto. Alex invirtió 0 minutos.",
+      typing:"escribiendo…", on:"con Rigo",
+      file:"Ficha de la llamada", ready:"● LISTO", rows:["Camiones","Carga","Necesita cobertura","Idioma","Historial","Llamada"], langv:"Español", hist:"Cotizado 12 ago, reactivado",
+      replay:["¿quién eres?","ah, hola. todavía no, ya tengo 3 camiones","sigo con dry van","sigo renovando en otoño","a las 10 está bien"]
+    }
+  };
+  var feed=document.getElementById('feed'), form=document.getElementById('composer'), input=document.getElementById('msg'), sendBtn=document.getElementById('send');
+  var hav=document.querySelector('.chead .rigo-av'), hmeta=document.querySelector('.chead .cm-t');
+  var run=0, st, chain=Promise.resolve(), phTimer;
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+  function add(cls, html){ var d=document.createElement('div'); d.className=cls; d.innerHTML=html; feed.appendChild(d); feed.scrollTop=feed.scrollHeight; return d; }
+  function esc(s){ return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  async function say(id, text){
+    var L=R[st.cl]; if(hmeta) hmeta.textContent=L.typing; if(hav) hav.classList.add('think');
+    var t=add('typing','<i></i><i></i><i></i>'); await wait(550+Math.min(900,text.length*9)); t.remove();
+    if(hmeta) hmeta.textContent=R[lang].on; if(hav) hav.classList.remove('think');
+    if(id!==run) return false; add('b rigo', esc(text)); return true;
+  }
+  function placeholders(){
+    clearInterval(phTimer); var i=0, P=R[lang].ph; input.placeholder=P[0];
+    if(reduce) return; phTimer=setInterval(function(){ if(document.activeElement===input && input.value) return; i=(i+1)%P.length; input.placeholder=P[i]; },2600);
+  }
+
+  var WORDN={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,uno:1,una:1,dos:2,tres:3,cuatro:4,cinco:5,seis:6,siete:7,ocho:8,nueve:9,diez:10};
+  var HAULS=[[/dry ?van|\bvan\b|caja seca|\bseca\b/,'Dry van'],[/reefer|refrigerat|\brefri|refrigerad|thermo/,'Reefer'],[/flat ?bed|plataforma/,'Flatbed'],[/tanker|\btanque|\bpipa/,'Tanker'],[/hot ?shot/,'Hotshot'],[/box truck/,'Box truck'],[/car haul|madrina|\bautos\b|\bcars\b/,'Car hauler'],[/\bdump|volteo/,'Dump truck'],[/intermodal|container|contenedor/,'Intermodal'],[/step ?deck|lowboy|cama baja/,'Step deck']];
+  var ES_RX=/\b(hola|s[ií]|qui[eé]n|camion|cami[oó]n|camiones|tengo|traigo|carga|cu[aá]nto|todav[ií]a|gracias|bueno|ma[nñ]ana|semana|mes|renuevo|renovando|nada|eres|cuesta|precio|ahorita|llevo|est[aá]|bien|pr[oó]ximo|a[uú]n|sigo|sigues|oto[nñ]o|jalando)\b/;
+  var EN_RX=/\b(hi|hello|hey|yes|yeah|who|who's|truck|trucks|have|got|how|much|still|thanks|week|month|renewal|haul|price|not|works|morning|afternoon|bot)\b/;
+  var YES_RX=/(^|[^a-záéíóúñ])(yes|yeah|yep|yup|same|still|correct|right|s[ií]|igual|sigo|sigue|claro|as[ií] es|exacto)(?![a-záéíóúñ])/;
+  function trucksIn(s, asked){
+    var m=s.match(/(\d{1,3})\s*(trucks?|units?|rigs?|tractors?|camion(es)?|cami[oó]n|unidades|tractos?)/); if(m) return +m[1];
+    m=s.match(/\b(one|two|three|four|five|six|seven|eight|nine|ten|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\s+(trucks?|units?|rigs?|camion(es)?|cami[oó]n|unidades)/); if(m) return WORDN[m[1]];
+    if(asked){ m=s.replace(/\d{1,2}(:\d\d)?\s*(am|pm|a\.m|p\.m)|\d+\s*(months?|weeks?|days?|years?|mes(es)?|semanas?|d[ií]as?|a[nñ]os?)/g,'').match(/\b(\d{1,3})\b/); if(m) return +m[1];
+      m=s.match(/\b(one|two|three|four|five|six|seven|eight|nine|ten|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\b/); if(m) return WORDN[m[1]];
+      if((YES_RX.test(s) && !/looking|buscando|not yet|todav/.test(s)) || /just (the )?one|solo uno|nom[aá]s uno/.test(s)) return 1; }
+    return null;
+  }
+  function haulIn(s){ for(var i=0;i<HAULS.length;i++) if(HAULS[i][0].test(s)) return HAULS[i][1]; return null; }
+  function whenIn(s, asked){
+    if(/asap|right now|need it now|today|right away|this week|sooner|urgent|\bya mismo|ahorita|\bhoy\b|esta semana|\burge|lo antes|cuanto antes|antes/.test(s)) return 'asap';
+    if(/renew|next month|in a month|renuev|renovaci|renovando|pr[oó]ximo mes|mes que viene|vence|expires?|fall|oto[nñ]o/.test(s)) return 'renew';
+    if(/shop|compar|just looking|checking|browsing|viendo|cotizando|nom[aá]s viendo/.test(s)) return 'shop';
+    if(asked && YES_RX.test(s)) return 'renew';
+    return null;
+  }
+  function timeIn(s){
+    var m=s.match(/\b(\d{1,2})(?::(\d\d))?\s*(am|pm|a\.m\.?|p\.m\.?)?/);
+    if(m){ var h=+m[1], ap=m[3]?(m[3][0]==='p'?'pm':'am'):(h>=8&&h<=11?'am':'pm'); if(h>12||h===0) return null; return h+(m[2]?':'+m[2]:'')+ap; }
+    if(/morning|ma[nñ]ana|temprano/.test(s)) return '10am';
+    if(/afternoon|tarde|after lunch/.test(s)) return '2pm';
+    return null;
+  }
+
+  async function handle(id, raw){
+    if(id!==run || !raw.trim()) return;
+    var s=' '+raw.toLowerCase()+' ';
+    add('b me', esc(raw));
+    if(ES_RX.test(s) && !EN_RX.test(s)) st.cl='es'; else if(EN_RX.test(s) && !ES_RX.test(s)) st.cl='en';
+    var L=R[st.cl];
+    if(st.stopped) return;
+    if(st.time){ await say(id,L.after); return; }
+    if(/\bstop\b|unsubscribe|not interested|no thanks|leave me alone|don'?t text|no me interesa|no gracias|ya no me escribas|\bbaja\b/.test(s)){
+      st.stopped=true; if(!await say(id,L.stop)) return; add('sys','✓ '+esc(L.stopSys)); return; }
+    var pre=[], ack=[], filled=false;
+    var isAI=/\bbot\b|robot|\bai\b|\bia\b|are you real|real person|eres real|human|humano|automat|autom[aá]tic|computer|machine|m[aá]quina/.test(s);
+    var isWho=!isAI && /who|qui[eé]n/.test(s);
+    var isPrice=/how much|price|\bcosts?\b|\brates?\b|\$|cu[aá]nto|precio|cuesta|cobran/.test(s);
+    var isHuman=!isAI && /talk to (someone|alex|a person)|call me|ll[aá]mame|hablar con/.test(s);
+    if(isWho) pre.push(L.who); if(isAI) pre.push(L.ai); if(isPrice) pre.push(L.price); if(isHuman) pre.push(L.human);
+    var side=isWho||isAI||isPrice;
+    var stage=!st.trucks?'trucks':!st.haul?'haul':!st.when?'when':'time';
+    if(!st.covered && side && !/not yet|\bno\b|todav|a[uú]n no|looking|buscando|yes|yeah|already|covered|ya tengo|\d/.test(s)){ st.askCovered=true; }
+    else if(!st.covered){ st.covered=true;
+      if(/not yet|\bno\b|nope|todav[ií]a|a[uú]n no|looking|buscando/.test(s)) ack.push(L.no);
+      else if(/\byes\b|yeah|yep|already|covered|\bs[ií]\b|ya tengo|ya consegu/.test(s)) ack.push(L.yes);
+      stage=null; }
+    if(!st.trucks){ var n=trucksIn(s, stage==='trucks' && !side); if(n){ st.trucks=n; filled=true; ack.push((n===1?L.t1:n<=5?L.tFew:L.tMany).replace('{n}',n)); } }
+    if(!st.haul){ var h=haulIn(s);
+      if(h){ st.haul=h; filled=true; ack.push(h==='Dry van'&&stage==='haul'?L.hSame:L.hAck.replace('{h}',h)); }
+      else if(stage==='haul' && !side){
+        if(YES_RX.test(s)){ st.haul='Dry van'; filled=true; ack.push(L.hSame); }
+        else if(/^\s*(no|nope|nah)\W*\s*$/.test(s)){ st.reHaul=true; }
+        else { h=raw.trim().replace(/[.!?]+$/,''); st.haul=h.charAt(0).toUpperCase()+h.slice(1,26); filled=true; ack.push(L.hOther); } } }
+    if(!st.when && st.haul){ var w=whenIn(s, stage==='when' && !side);
+      if(!w && stage==='when' && !side && /^\s*(no|nope|nah|not sure|idk|no s[eé])\W*\s*$/.test(s)){ st.reWhen=true; }
+      else if(!w && stage==='when' && !side){ w='other'; st.whenTxt=raw.trim().slice(0,26); }
+      if(!w||w==='renew'){ var mo=s.match(/\b(january|february|march|april|june|july|august|september|october|november|december|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b/);
+        if(mo){ w='renew'; st.whenTxt=(st.cl==='es'?'Renueva en ':'Renews in ')+mo[1].charAt(0).toUpperCase()+mo[1].slice(1); } }
+      if(w && (stage==='when' || w!=='renew' || /renew|renuev|renovando|fall|oto[nñ]o|next month|pr[oó]ximo mes/.test(s))){ st.when=w; filled=true; if(L.wAck[w]) ack.push(L.wAck[w]); } }
+    if(stage==='time' && !side){ var t=timeIn(s); if(t){ st.time=t; filled=true; } }
+
+    for(var i=0;i<pre.length;i++){ if(!await say(id,pre[i])) return; }
+    if(st.time){
+      var asap=st.when==='asap';
+      if(!await say(id,L.done.replace('{d}',asap?L.dAsap:L.dLater).replace('{t}',st.time))) return;
+      if(hav) hav.classList.add('joy'); await wait(500); if(id!==run) return;
+      add('sys','✓ '+esc(L.sys));
+      var wl=st.whenTxt||L.wLabel[st.when];
+      var v=[String(st.trucks),st.haul,wl,L.langv,L.hist,(asap?L.sAsap:L.sLater)+' '+st.time], rows='';
+      L.rows.forEach(function(r,i){ rows+='<div class="row'+(i===2?' hot':'')+'"><span>'+esc(r)+'</span><span>'+esc(v[i])+'</span></div>'; });
+      add('file','<div class="fh">'+esc(L.file)+'<span>'+L.ready+'</span></div>'+rows);
+      await wait(800); if(id!==run) return; add('sys punch', esc(L.punch)); return;
+    }
+    var q=st.askCovered&&!st.covered?L.qCovered:st.reWhen?L.reWhen:!st.trucks?L.qTrucks:!st.haul?(st.reHaul?L.reHaul:L.qHaul):!st.when?L.qWhen:(st.when==='asap'?L.qBookAsap:L.qBook);
+    if(!filled && !pre.length && !ack.length && !st.reHaul){ if(stage==='trucks') q=L.reTrucks; else if(stage==='time') q=L.reBook; }
+    st.reHaul=false; st.reWhen=false;
+    await say(id,(ack.join(' ')+' '+q).trim());
+  }
+
+  async function startDemo(){
+    var id=++run, L=R[lang]; feed.innerHTML=''; input.value=''; input.disabled=false; sendBtn.disabled=false; form.classList.add('nudge');
+    st={cl:lang}; chain=Promise.resolve(); if(hav) hav.classList.remove('joy'); placeholders();
+    add('sys',esc(L.later));
+    add('memo','<b>'+esc(L.memoT)+'</b>'+esc(L.memo));
+    await wait(700); if(id!==run) return;
+    if(!await say(id,L.hi)) return;
+    await wait(500); if(id!==run) return; add('sys hint', esc(L.hint));
+  }
+  form.addEventListener('submit',function(e){ e.preventDefault(); var v=input.value; if(!v.trim()) return; input.value=''; form.classList.remove('nudge');
+    var hint=feed.querySelector('.hint'); if(hint) hint.remove();
+    var id=run; chain=chain.then(function(){ return handle(id,v); }); });
+  input.addEventListener('focus',function(){ form.classList.remove('nudge'); });
+
+  async function replay(){
+    await startDemo(); var id=run; input.disabled=true; sendBtn.disabled=true;
+    var script=R[lang].replay;
+    for(var k=0;k<script.length;k++){
+      await wait(700); if(id!==run) return;
+      var txt=script[k]; for(var c=1;c<=txt.length;c++){ input.value=txt.slice(0,c); await wait(38); if(id!==run) return; }
+      await wait(250); if(id!==run) return; input.value=''; var hint=feed.querySelector('.hint'); if(hint) hint.remove(); form.classList.remove('nudge');
+      await handle(id,txt); if(id!==run) return;
+    }
+    input.disabled=false; sendBtn.disabled=false;
+  }
+  document.getElementById('restart').onclick=function(){ startDemo(); };
+  document.getElementById('replay').onclick=function(){ replay(); };
+
+
+  var lit=[].slice.call(document.querySelectorAll('section h2'));
+  lit=lit.map(function(h){ var w=document.createElement('div'); w.className='lightup-wrap lightup'; h.parentNode.insertBefore(w,h); w.appendChild(h);
+    var sw=document.createElement('span'); sw.className='sweep'; sw.setAttribute('aria-hidden','true'); w.appendChild(sw); return w; });
+  var fcar=document.getElementById('finalcar');
+  if('IntersectionObserver' in window && !reduce){
+    var lo=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); lo.unobserve(e.target);} }); },{rootMargin:'0px 0px -25% 0px'});
+    lit.forEach(function(h){ lo.observe(h); }); lo.observe(fcar);
+  } else { fcar.classList.add('on'); }
+
+  /* ---------- sticky CTA on phones ---------- */
+  var stick=document.querySelector('.stick'), heroEl=document.getElementById('top'), finalEl=document.querySelector('.final'), offEl=document.getElementById('offer'), vis={};
+  if('IntersectionObserver' in window){
+    var so=new IntersectionObserver(function(es){ es.forEach(function(e){ vis[e.target.className]=e.isIntersecting; });
+      stick.classList.toggle('show', !vis[heroEl.className] && !vis[finalEl.className] && !vis[offEl.className]); });
+    var ctas=[].slice.call(document.querySelectorAll('.sec-cta'));
+    ctas.forEach(function(el,i){ el.dataset.k='c'+i; });
+    so=new IntersectionObserver(function(es){ es.forEach(function(e){ vis[e.target.dataset.k||e.target.className]=e.isIntersecting; });
+      var hide=vis['trysec']||vis[heroEl.className]||vis[finalEl.className]||vis[offEl.className]||ctas.some(function(c){ return vis[c.dataset.k]; });
+      stick.classList.toggle('show', !hide); });
+    [heroEl,finalEl,offEl,document.getElementById('try')].concat(ctas).forEach(function(el){ so.observe(el); });
+  }
+
+  /* ---------- hero phone (auto-playing conversation) ---------- */
+  var lvPhone=document.getElementById('lv-phone'), lmx=0, lmy=0;
+  function lvTilt(){ var y=Math.min(scrollY,700)/700; lvPhone.style.setProperty('--ry',(-16+y*22+lmx*8)+'deg'); lvPhone.style.setProperty('--rx',(8-y*10-lmy*6)+'deg'); }
+  if(!reduce){ addEventListener('pointermove',function(e){ lmx=e.clientX/innerWidth-.5; lmy=e.clientY/innerHeight-.5; lvTilt(); },{passive:true}); addEventListener('scroll',lvTilt,{passive:true}); }
+  var lvB=[].slice.call(document.querySelectorAll('#lv-msgs .lv-b')), lvTyping=document.getElementById('lv-typing'), lvBooked=document.getElementById('lv-booked');
+  function lvWait(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+  async function lvPlay(){
+    if(reduce){ lvB.forEach(function(b){ b.classList.add('show'); }); lvBooked.classList.add('show'); return; }
+    while(true){
+      lvB.forEach(function(b){ b.classList.remove('show'); }); lvBooked.classList.remove('show');
+      await lvWait(600);
+      for(var i=0;i<lvB.length;i++){ if(lvB[i].classList.contains('lv-in')){ lvTyping.classList.add('on'); await lvWait(1100); lvTyping.classList.remove('on'); } lvB[i].classList.add('show'); await lvWait(900); }
+      await lvWait(400); lvBooked.classList.add('show'); await lvWait(4200);
+    }
+  }
+  lvB.forEach(function(b){ b.classList.add('show'); }); lvBooked.classList.add('show'); setTimeout(lvPlay,2500);
+
+  /* ---------- try-it panel opens only on request ---------- */
+  var tryOpen=false, openBtn=document.getElementById('openTry'), tryBody=document.getElementById('tryBody');
+  function openTry(){ if(tryOpen) return; tryOpen=true; tryBody.hidden=false; openBtn.setAttribute('aria-expanded','true'); openBtn.style.display='none'; startDemo();
+    setTimeout(function(){ tryBody.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); },60); }
+  openBtn.addEventListener('click',openTry);
+  document.querySelectorAll('a[href="#try"]').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); openTry(); }); });
+
+  /* ---------- count-up stats ---------- */
+  var counts=[].slice.call(document.querySelectorAll('.count'));
+  if('IntersectionObserver' in window && !reduce){
+    counts.forEach(function(c){ c.textContent='0'; });
+    var co=new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return; co.unobserve(e.target);
+      var el=e.target, to=+el.dataset.to, t0=performance.now();
+      (function f(now){ var k=Math.min(1,(now-t0)/1400), v=Math.round(to*(1-Math.pow(1-k,3))); el.textContent=v; if(k<1) requestAnimationFrame(f); })(t0);
+    }); },{threshold:.6});
+    counts.forEach(function(c){ co.observe(c); });
+  }
+
   /* ---------- scroll-lit letter ---------- */
-  var words = [];
+  var words=[];
   function splitWords(){
-    var el = document.getElementById('words');
-    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    var texts = []; while(walker.nextNode()) texts.push(walker.currentNode);
-    texts.forEach(function(t){
-      var frag = document.createDocumentFragment();
-      t.textContent.split(/(\s+)/).forEach(function(p){
-        if(!p) return;
-        if(/^\s+$/.test(p)){ frag.appendChild(document.createTextNode(p)); return; }
-        var s = document.createElement('span'); s.className='w'; s.textContent=p; frag.appendChild(s);
-      });
-      t.parentNode.replaceChild(frag, t);
-    });
-    words = Array.prototype.slice.call(el.querySelectorAll('.w'));
-    lightWords();
+    var el=document.getElementById('words'), w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT), ts=[];
+    while(w.nextNode()) ts.push(w.currentNode);
+    ts.forEach(function(t){ var f=document.createDocumentFragment();
+      t.textContent.split(/(\s+)/).forEach(function(p){ if(!p) return; if(/^\s+$/.test(p)){ f.appendChild(document.createTextNode(p)); return; }
+        var s=document.createElement('span'); s.className='w'; s.textContent=p; f.appendChild(s); });
+      t.parentNode.replaceChild(f,t); });
+    words=[].slice.call(el.querySelectorAll('.w')); lightWords();
   }
   function lightWords(){
     if(!words.length) return;
-    var el = document.getElementById('words'), r = el.getBoundingClientRect(), vh = innerHeight;
-    var p = reduce ? 1 : Math.min(1, Math.max(0, (vh*0.85 - r.top) / (r.height + vh*0.35)));
-    var n = Math.round(p * words.length);
-    words.forEach(function(w,i){ w.classList.toggle('lit', i < n); });
+    var r=document.getElementById('words').getBoundingClientRect(), vh=innerHeight;
+    var p=reduce?1:Math.min(1,Math.max(0,(vh*.85-r.top)/(r.height+vh*.35))), n=Math.round(p*words.length);
+    words.forEach(function(w,i){ w.classList.toggle('lit',i<n); });
   }
-
-  /* ---------- phone tilt ---------- */
-  var phone = document.getElementById('phone'), mx=0, my=0;
-  function tilt(){
-    var y = Math.min(scrollY, 700)/700;
-    phone.style.setProperty('--ry', (-16 + y*22 + mx*8) + 'deg');
-    phone.style.setProperty('--rx', (8 - y*10 - my*6) + 'deg');
-  }
-  if(!reduce){
-    addEventListener('pointermove', function(e){ mx = e.clientX/innerWidth-.5; my = e.clientY/innerHeight-.5; tilt(); }, {passive:true});
-  }
-
-  /* ---------- conversation loop ---------- */
-  var bubbles = Array.prototype.slice.call(document.querySelectorAll('#msgs .b'));
-  var typing = document.getElementById('typing'), booked = document.getElementById('booked');
-  function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
-  async function play(){
-    if(reduce){ bubbles.forEach(function(b){b.classList.add('show');}); booked.classList.add('show'); return; }
-    while(true){
-      bubbles.forEach(function(b){ b.classList.remove('show'); }); booked.classList.remove('show');
-      await wait(600);
-      for(var i=0;i<bubbles.length;i++){
-        if(bubbles[i].classList.contains('in')){ typing.classList.add('on'); await wait(1100); typing.classList.remove('on'); }
-        bubbles[i].classList.add('show'); await wait(900);
-      }
-      await wait(400); booked.classList.add('show');
-      await wait(4200);
-    }
-  }
-  /* resting frame: show full conversation first, then start the loop */
-  bubbles.forEach(function(b){ b.classList.add('show'); }); booked.classList.add('show');
-  setTimeout(play, 2500);
 
   /* ---------- calculator ---------- */
   var q=document.getElementById('q'), r=document.getElementById('r'), c=document.getElementById('c');
-  function money(v){ return '$' + Math.round(v).toLocaleString('en-US'); }
-  function calc(){
-    var pol = Math.round(q.value * r.value / 100);
-    document.getElementById('qo').textContent = Number(q.value).toLocaleString('en-US');
-    document.getElementById('ro').textContent = r.value;
-    document.getElementById('co').textContent = money(c.value);
-    document.getElementById('pol').textContent = pol;
-    document.getElementById('tot').textContent = money(pol * c.value);
-  }
-  [q,r,c].forEach(function(i){ i.addEventListener('input', calc); });
+  if(!q){ window.__nocalc=1; }
+  function money(v){ return '$'+Math.round(v).toLocaleString('en-US'); }
+  function calc(){ if(!q) return; var pol=Math.round(q.value*r.value/100);
+    document.getElementById('qo').textContent=Number(q.value).toLocaleString('en-US');
+    document.getElementById('ro').textContent=r.value; document.getElementById('co').textContent=money(c.value);
+    document.getElementById('pol').textContent=pol; document.getElementById('tot').textContent=money(pol*c.value); }
+  if(q) [q,r,c].forEach(function(i){ i.addEventListener('input',calc); });
 
   /* ---------- reveals ---------- */
-  var rvs = document.querySelectorAll('.rv');
   if('IntersectionObserver' in window && !reduce){
-    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target);} }); }, {rootMargin:'0px 0px -8% 0px'});
-    rvs.forEach(function(el){ var b=el.getBoundingClientRect(); if(b.top > innerHeight){ el.classList.add('pre'); io.observe(el);} });
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('pre'); io.unobserve(e.target);} }); },{rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){ if(el.getBoundingClientRect().top>innerHeight){ el.classList.add('pre'); io.observe(el);} });
   }
 
   /* ---------- highway canvas ---------- */
-  var cv = document.getElementById('road'), ctx = cv.getContext('2d'), t0 = 0;
-  function size(){ var d = Math.min(devicePixelRatio||1, 2); cv.width = cv.offsetWidth*d; cv.height = cv.offsetHeight*d; ctx.setTransform(d,0,0,d,0,0); }
+  var cv=document.getElementById('road'), ctx=cv.getContext('2d');
+  function size(){ var d=Math.min(devicePixelRatio||1,2); cv.width=cv.offsetWidth*d; cv.height=cv.offsetHeight*d; ctx.setTransform(d,0,0,d,0,0); }
   function draw(t){
-    var w = cv.offsetWidth, h = cv.offsetHeight, vx = w*0.72, vy = h*0.38;
-    ctx.clearRect(0,0,w,h);
-    var g = ctx.createRadialGradient(vx,vy,0,vx,vy,w*0.6); g.addColorStop(0,'rgba(242,107,29,.16)'); g.addColorStop(1,'rgba(11,18,29,0)');
-    ctx.fillStyle = g; ctx.fillRect(0,0,w,h);
-    ctx.lineWidth = 1;
-    for(var i=-6;i<=6;i++){
-      ctx.strokeStyle = 'rgba(243,241,236,' + (0.05 - Math.abs(i)*0.003) + ')';
-      ctx.beginPath(); ctx.moveTo(vx,vy); ctx.lineTo(vx + i*w*0.22, h); ctx.stroke();
-    }
-    var speed = reduce ? 0 : t*0.00025;
-    for(var k=0;k<14;k++){
-      var z = ((k/14) + speed) % 1, zz = z*z;
-      var y = vy + (h - vy)*zz, len = 4 + 34*zz;
-      ctx.strokeStyle = 'rgba(242,107,29,' + (0.15 + 0.5*zz) + ')'; ctx.lineWidth = 1 + 3*zz;
-      [-1,1].forEach(function(s){
-        var x = vx + s*w*0.11*zz;
-        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + s*w*0.11*(len/(h-vy))*1.5, y + len); ctx.stroke();
-      });
-    }
+    var w=cv.offsetWidth,h=cv.offsetHeight,vx=w*.72,vy=h*.36; ctx.clearRect(0,0,w,h);
+    var g=ctx.createRadialGradient(vx,vy,0,vx,vy,w*.6); g.addColorStop(0,'rgba(242,107,29,.14)'); g.addColorStop(1,'rgba(11,18,29,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+    for(var i=-6;i<=6;i++){ ctx.strokeStyle='rgba(243,241,236,'+(.05-Math.abs(i)*.003)+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(vx,vy); ctx.lineTo(vx+i*w*.22,h); ctx.stroke(); }
+    var sp=reduce?0:t*.00025;
+    for(var k=0;k<14;k++){ var z=((k/14)+sp)%1, zz=z*z, y=vy+(h-vy)*zz, len=4+34*zz;
+      ctx.strokeStyle='rgba(242,107,29,'+(.15+.5*zz)+')'; ctx.lineWidth=1+3*zz;
+      [-1,1].forEach(function(s){ var x=vx+s*w*.11*zz; ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+s*w*.11*(len/(h-vy))*1.5,y+len); ctx.stroke(); }); }
     if(!reduce) requestAnimationFrame(draw);
   }
+  var tick=false;
+  addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(function(){ lightWords(); tick=false; }); } },{passive:true});
+  addEventListener('resize',function(){ size(); if(reduce) draw(0); lightWords(); });
+  size(); requestAnimationFrame(draw); calc();
 
-  var ticking = false;
-  addEventListener('scroll', function(){ if(!ticking){ ticking=true; requestAnimationFrame(function(){ tilt(); lightWords(); ticking=false; }); } }, {passive:true});
-  addEventListener('resize', function(){ size(); if(reduce) draw(0); lightWords(); });
-
-  size(); requestAnimationFrame(draw); tilt(); calc();
-  var start = 'en';
-  try{ start = localStorage.getItem('ffai-lang') || 'en'; }catch(e){}
-  if(location.hash === '#es') start = 'es';
-  if(start === 'es') setLang('es'); else splitWords();
+  var start='en'; try{ start=localStorage.getItem('ffai-lang')||'en'; }catch(e){}
+  if(location.hash==='#es') start='es';
+  if(start==='es') setLang('es'); else { splitWords(); }
 })();
 </script>
-</body>
-</html>
+</body></html>
